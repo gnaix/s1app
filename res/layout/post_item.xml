@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dip" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <com.gnaix.common.ui.RobotoTextView
+            android:id="@+id/floorTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_orange"
+            android:textSize="14sp"
+            app:typeface="roboto_thin" />
+
+        <com.gnaix.common.ui.RobotoTextView
+            android:layout_marginLeft="10dip"
+            android:id="@+id/authorNameTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_orange"
+            android:textSize="16sp"
+            app:typeface="roboto_bold" />
+
+        <com.gnaix.common.ui.RobotoTextView
+            android:id="@+id/postTimeTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:textColor="@color/text_blue"
+            android:textSize="13sp"
+            app:typeface="roboto_thin" />
+    </LinearLayout>
+
+    <com.gnaix.common.ui.RobotoTextView
+        android:id="@+id/contentTv"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/text_blue"
+        android:textSize="15sp"
+        app:typeface="roboto_regular" />
+
+</LinearLayout>

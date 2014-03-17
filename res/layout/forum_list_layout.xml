@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/light_yellow"
+    android:layout_height="match_parent" >
+    <ExpandableListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:cacheColorHint="@android:color/transparent"
+        android:childDivider="@drawable/dash_divider"
+        android:choiceMode="singleChoice"
+        android:divider="@drawable/dash_divider"
+        android:dividerHeight="1dp"
+        android:groupIndicator="@null"
+        android:layerType="software"
+        android:listSelector="@drawable/bg_forum_list_item"
+        android:scrollbars="none" />
+
+    
+</RelativeLayout>

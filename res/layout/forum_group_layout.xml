@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/light_yellow"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingTop="15dp"
+    android:paddingBottom="15dp"
+    android:paddingLeft="10dp" >
+
+    <ImageView
+        android:id="@id/image1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/content_description_indicator"
+        android:src="@drawable/group_indicator_collapse" />
+
+    <com.gnaix.common.ui.RobotoTextView android:layout_marginLeft="10dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:typeface="roboto_medium"
+        android:id="@id/text1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:text="@string/text_bala"
+        android:textColor="@color/forum_title"
+        android:textSize="@dimen/forum_title_p_size"
+        />
+
+</LinearLayout>

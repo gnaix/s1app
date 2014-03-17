@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dip" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <com.gnaix.common.ui.RobotoTextView
+                android:id="@+id/authorNameTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DNA"
+                android:textColor="@color/text_orange"
+                android:textSize="16sp"
+                app:typeface="roboto_bold" />
+
+            <com.gnaix.common.ui.RobotoTextView
+                android:id="@+id/postTimeTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:text="1小时前"
+                android:textColor="@color/text_blue"
+                android:textSize="13sp"
+                app:typeface="roboto_thin" />
+        </LinearLayout>
+
+        <com.gnaix.common.ui.RobotoTextView
+            android:id="@+id/subjectTv"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="原来EVA的校服是抄袭我朝初年时使用的过的校服"
+            android:textColor="@color/text_blue"
+            android:textSize="17sp"
+            app:typeface="roboto_regular" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp" >
+
+            <com.gnaix.common.ui.RobotoTextView
+                android:id="@+id/lastPostTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textColor="@color/text_blue"
+                android:textSize="13sp"
+                app:typeface="roboto_thin" />
+
+            <com.gnaix.common.ui.RobotoTextView
+                android:id="@+id/readTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/replyTv"
+                android:text="浏览(102)"
+                android:textColor="@color/text_blue"
+                android:textSize="13sp"
+                app:typeface="roboto_thin" />
+
+            <com.gnaix.common.ui.RobotoTextView
+                android:id="@+id/replyTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="10dip"
+                android:text="回复(20)"
+                android:textColor="@color/text_blue"
+                android:textSize="13sp"
+                app:typeface="roboto_thin" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

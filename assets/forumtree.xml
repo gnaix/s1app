@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<stage1st>
+<group name="常用版块">
+	<froum id="999" name="热门主题"/>
+</group>
+<group name="热门新区">
+	<froum id="134" name="热血魔兽"/>
+	<froum id="132" name="炉石传说"/>
+	<froum id="131" name="车"/>
+	<froum id="69" name="怪物猎人"/>
+	<froum id="76" name="车欠女未"/>
+	<froum id="111" name="英雄联盟(LOL)"/>
+	<froum id="60" name="激战2"/>
+</group>
+<group name="主论坛">
+	<froum id="4" name="游戏论坛"/>
+	<froum id="97" name="蛋头电玩贩卖区"/>
+	<froum id="102" name="大众软件精华区"/>
+	<froum id="135" name="手游页游"/>
+	<froum id="6" name="动漫论坛"/>
+	<froum id="83" name="动漫投票鉴赏"/>
+	<froum id="130" name="番且炒弹"/>
+	<froum id="136" name="模玩专区"/>
+	<froum id="48" name="影视论坛"/>
+	<froum id="24" name="音乐论坛"/>
+	<froum id="51" name="ＰＣ数码"/>
+	<froum id="80" name="摄影区"/>
+	<froum id="124" name="开箱区"/>
+	<froum id="50" name="文史沙龙"/>
+	<froum id="120" name="读书会"/>
+	<froum id="31" name="彼岸文化"/>
+	<froum id="77" name="八卦体育"/>
+	<froum id="75" name="外野"/>
+	<froum id="133" name="剑灵"/>
+	<froum id="82" name="网游综合讨论区"/>
+	<froum id="115" name="二手交易区"/>
+</group>
+<group name="外野子论坛">
+	<froum id="123" name="吃货"/>
+	<froum id="93" name="火暴"/>
+	<froum id="74" name="马叉虫"/>
+	<froum id="101" name="犭苗犭句"/>
+	<froum id="87" name="圣？战！日&gt;_"/>
+	<froum id="109" name="菠菜"/>
+	<froum id="71" name="火星"/>
+	<froum id="100" name="哥欠"/>
+</group>
+<group name="网游综合讨论区子论坛">
+	<froum id="110" name="洛奇英雄传"/>
+	<froum id="118" name="真碉堡山 Diablo3"/>
+	<froum id="53" name="魔兽世界"/>
+	<froum id="66" name="光荣网游版"/>
+	<froum id="78" name="地下城勇士(DNF)"/>
+	<froum id="79" name="暴雪游戏专区"/>
+	<froum id="94" name="永恒之塔"/>
+	<froum id="105" name="FF 14"/>
+	<froum id="56" name="梦幻之星 Phantasy Star"/>
+	<froum id="36" name="仙境传说R O."/>
+	<froum id="116" name="剑网3"/>
+	<froum id="113" name="第九大陆C9"/>
+</group>
+<group name="主题公园">
+	<froum id="122" name="将军"/>
+	<froum id="125" name="热血海贼王"/>
+	<froum id="85" name="生化危机共和国"/>
+	<froum id="26" name="女神转生"/>
+	<froum id="45" name="风来西林"/>
+	<froum id="42" name="任天堂专区"/>
+	<froum id="41" name="无双论坛"/>
+	<froum id="43" name="幻水圣域"/>
+	<froum id="46" name="重装机兵"/>
+	<froum id="33" name="异度传说"/>
+	<froum id="49" name="街"/>
+	<froum id="61" name="LIVE A LIVE"/>
+</group>
+<group name="子论坛">
+	<froum id="27">内野</froum>
+</group>
+</stage1st>

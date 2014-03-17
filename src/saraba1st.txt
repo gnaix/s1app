@@ -1,0 +1,22 @@
+
+http://bbs.saraba1st.com/2b/
+
+热门主题：api/mobile/index.php?mobile=no&version=1&module=hotthread
+论坛主题列表：api/mobile/index.php?mobile=no&version=1&module=forumdisplay&submodule=checkpost&fid=75&page=1&tpp=20&orderby=dateline
+主题内容：api/mobile/index.php?mobile=no&version=1&module=viewthread&submodule=checkpost&tid=957967&ppp=10&page=1
+版块：api/mobile/index.php?mobile=no&version=1&module=forumindex
+
+收藏论坛 GET /2b/api/mobile/index.php?mobile=no&version=1&module=favforum&id=51 
+GET /2b/api/mobile/index.php?mobile=no&version=1&module=secure&type=post
+
+回复(POST)：/2b/api/mobile/index.php?mobile=no&version=1&module=sendreply&replysubmit=yes&tid=957677
+     application/x-www-form-urlencoded
+     带上Cookie
+     message=xxx&noticetrimstr=&formhash=fb99d4d7&mobiletype=2
+头像：uc_server/data/avatar/000/18/01/28_avatar_small.jpg
+
+收藏主题(POST) /2b/api/mobile/index.php?mobile=no&version=1&module=favthread&favoritesubmit=yes&id=957957
+    带上Cookie: B7Y9_2132_auth=111axLr3EUSfCaTfL0yK1m23UsmQUyGnuzUMNlK2%2BCgcJssrThkJZb%2BT16Qsrp%2FG0g%2F6TooLJvGROGAYduTPK3nYBhc;B7Y9_2132_saltkey=P3vPPPU3;
+
+
+
