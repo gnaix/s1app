@@ -3,100 +3,59 @@ package com.gnaix.app.s1.activity;
 import java.util.ArrayList;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.gnaix.app.s1.Constants;
 import com.gnaix.app.s1.R;
 import com.gnaix.app.s1.bean.Forum;
 import com.gnaix.app.s1.bean.Topic;
+import com.gnaix.app.s1.nav.NavigationManager;
 import com.gnaix.app.s1.service.Stage1ApiClient;
 import com.gnaix.app.s1.service.Stage1ApiClient.Result;
-import com.gnaix.common.ui.AutoDismissFragmentDialog;
-import com.gnaix.common.ui.AutoDismissFragmentDialog.AutoDismissListener;
 
-public class ForumTopicListFragment extends Fragment implements AutoDismissListener,
+public class ForumTopicListFragment extends PageFragment implements 
         OnItemClickListener, Stage1ApiClient.ClientCallback {
 
     private ListView mListView;
     private TopicListAdapter mTopicListAdapter;
     private int currentPage = 1;
-    private AutoDismissFragmentDialog mDialog;
     private TopicDetialFragment mTopicDetialFragment;
-    private Stage1ApiClient mClient;
     private int taskIDRefresh;
+    private ArrayList<Topic> mTopicList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mTopicDetialFragment = new TopicDetialFragment();
+        mTopicList = new ArrayList<Topic>();
     }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mDialog = new AutoDismissFragmentDialog();
-        mDialog.setAutoDismiss(true);
-        mDialog.setCancelable(false);
-        mDialog.setAutoDismissListener(this);
-        mTopicListAdapter = new TopicListAdapter(getActivity());
-        mListView.setAdapter(mTopicListAdapter);
-        mListView.setOnItemClickListener(this);
-
-        MainActivity host = (MainActivity) getActivity();
-        mClient = host.getStage1ApiClient();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View contentView = inflater.inflate(R.layout.fragment_topic_list, container, false);
-        mListView = (ListView) contentView.findViewById(R.id.list);
-        return contentView;
-    }
-
+    
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.thread_list_fragment_actions, menu);
+        inflater.inflate(R.menu.topic_list_fragment_actions, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mTopicListAdapter != null) {
-            mTopicListAdapter.clear();
+        if (mTopicList != null) {
+            mTopicList.clear();
         }
-    }
-
-    @Override
-    public void onAutoDismiss(AutoDismissFragmentDialog dialog) {
-        Toast.makeText(getActivity().getApplicationContext(), R.string.msg_loading_failed,
-                Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (!mTopicDetialFragment.isAdded()) {
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.replace(R.id.content_frame, mTopicDetialFragment);
-            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-            transaction.addToBackStack(null);
-            transaction.commitAllowingStateLoss();
-        }
-        mTopicDetialFragment.request(mTopicListAdapter.getItem(position), 1);
-        if (mOnTopicClickerListener != null) {
-            // mOnTopicClickerListener.onItemClick(mTopicListAdapter.getItem(position),
-            // position);
-        }
+        mTopicDetialFragment.setArgument("TOPIC", mTopicListAdapter.getItem(position));
+        mTopicDetialFragment.setArgument("PAGE", 1);
+        mTopicDetialFragment.setRefreshRequired(true);
+        mNavigationManager.showPage(NavigationManager.PAGE_TOPIC_DETAIL, mTopicDetialFragment);
     }
 
     public OnTopicClickerListener mOnTopicClickerListener;
@@ -111,15 +70,20 @@ public class ForumTopicListFragment extends Fragment implements AutoDismissListe
 
     @Override
     public void onRequestFinish(Result result) {
+        hideLoadingIndicator();
         if (result.statueCode == Stage1ApiClient.SC_QEQUEST_SUCCESS
                 && (result.apiCode == Stage1ApiClient.API_REQUEST_FORUM_TOPIC_LIST || result.apiCode == Stage1ApiClient.API_REQUEST_HOT_TOPIC_LIST)) {
             ArrayList<Topic> list = (ArrayList<Topic>) result.mData;
             if (result.messageID == taskIDRefresh) {
-                mTopicListAdapter.setTopicList(list);
-            } else {
-                mTopicListAdapter.addTopics(list);
+                mTopicList.clear();
+            }
+            mTopicList.addAll(list);
+            if(mTopicList.size()>0) {
+                setRefreshRequired(false);
             }
             mTopicListAdapter.notifyDataSetChanged();
+        }else {
+            showErrorIndicator(result.message);
         }
     }
 
@@ -129,18 +93,37 @@ public class ForumTopicListFragment extends Fragment implements AutoDismissListe
 
     }
 
-    public int request(Forum forum, int page) {
-        currentPage = page;
-        int apiCode = Constants.ID_HOT_TOPIC_FROUM == forum.getFid() ? Stage1ApiClient.API_REQUEST_HOT_TOPIC_LIST
-                : Stage1ApiClient.API_REQUEST_FORUM_TOPIC_LIST;
-        int id = mClient.request(getActivity(), this, true, String.valueOf(apiCode),
-                String.valueOf(forum.getFid()), String.valueOf(currentPage));
-        return id;
-    }
-
     @Override
     public void onRequestProgress(int i) {
         // TODO Auto-generated method stub
 
     }
+
+    @Override
+    public void bindViews() {
+        mTopicListAdapter = new TopicListAdapter(getActivity());
+        mTopicListAdapter.setTopicList(mTopicList);
+        mListView = (ListView) findViewById(R.id.list);
+        mListView.setAdapter(mTopicListAdapter);
+        mListView.setOnItemClickListener(this);
+        mTopicListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected int getLayoutRes() {
+        return R.layout.fragment_topic_list;
+    }
+
+
+    @Override
+    public void refresh() {
+        showLoadingIndicator();
+        currentPage = getArguments().getInt("PAGE");
+        Forum forum = getArguments().getParcelable("FORUM");
+        int apiCode = Constants.ID_HOT_TOPIC_FROUM == forum.getFid() ? Stage1ApiClient.API_REQUEST_HOT_TOPIC_LIST
+                : Stage1ApiClient.API_REQUEST_FORUM_TOPIC_LIST;
+        taskIDRefresh = mPageFragmentHost.getS1Api().request(getActivity(), this, String.valueOf(apiCode),
+                String.valueOf(forum.getFid()), String.valueOf(currentPage));
+    }
+
 }

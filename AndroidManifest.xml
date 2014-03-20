@@ -28,17 +28,24 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5327f25f56240bdaab014f6a" >
+        </meta-data>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Play" />
+
         <activity
             android:name="com.gnaix.app.s1.activity.MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.gnaix.app.s1.activity.ForumListActivity"/>
+        <activity android:name="com.gnaix.app.s1.activity.ForumListActivity" />
     </application>
 
 </manifest>

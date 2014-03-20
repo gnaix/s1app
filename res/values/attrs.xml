@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ContentFrameLayout">
+        <attr name="layout" format="reference" />
+        <attr name="assignId" format="integer" />
+    </declare-styleable>
+
+</resources>

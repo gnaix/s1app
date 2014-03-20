@@ -21,7 +21,6 @@
         android:cacheColorHint="@android:color/transparent"
         android:divider="@drawable/dash_divider"
         android:fastScrollEnabled="true"
-        android:layerType="software"
-        android:listSelector="@drawable/bg_forum_list_item" />
+        android:layerType="software" />
 
 </LinearLayout>

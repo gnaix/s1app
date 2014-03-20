@@ -27,24 +27,10 @@ public class TopicListAdapter extends BaseAdapter {
 
     public TopicListAdapter(Context context) {
         mLayoutInflater = LayoutInflater.from(context);
-        mTopicList = new ArrayList<Topic>();
     }
 
     public void setTopicList(ArrayList<Topic> list) {
-        mTopicList.clear();
         mTopicList = list;
-    }
-
-    public void addTopics(ArrayList<Topic> list) {
-        if (list != null) {
-            mTopicList.addAll(list);
-            notifyDataSetChanged();
-        }
-    }
-
-    public void clear() {
-        mTopicList.clear();
-        notifyDataSetChanged();
     }
 
     @Override

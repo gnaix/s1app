@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- File created by the Android Action Bar Style Generator
+<!--
+     File created by the Android Action Bar Style Generator
 
      Copyright (C) 2011 The Android Open Source Project
      Copyright (C) 2012 readyState Software Ltd
@@ -14,7 +15,7 @@
      distributed under the License is distributed on an "AS IS" BASIS,
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
-     limitations under the License.
+     limitations under the License.
 -->
 
 <resources>
@@ -29,26 +30,22 @@
         <item name="actionModeBackground">@drawable/cab_background_top_stage1</item>
         <item name="actionModeSplitBackground">@drawable/cab_background_bottom_stage1</item>
         <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Stage1</item>
-
         <item name="actionBarTabTextStyle">@style/ActionBarTabText.Stage1</item>
         <item name="actionMenuTextColor">@color/white</item>
-        
+        <item name="progressBarStyle">@style/ProgressBar.Stage1</item>
     </style>
-    
+
     <!-- ActionBar title text -->
-    <style name="ActionBarTitleText.Stage1"
-           parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+    <style name="ActionBarTitleText.Stage1" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textColor">@color/white</item>
         <!-- The textColor property is backward compatible with the Support Library -->
     </style>
 
     <!-- ActionBar tabs text -->
-    <style name="ActionBarTabText.Stage1"
-           parent="@style/Widget.AppCompat.ActionBar.TabText">
+    <style name="ActionBarTabText.Stage1" parent="@style/Widget.AppCompat.ActionBar.TabText">
         <item name="android:textColor">@color/white</item>
         <!-- The textColor property is backward compatible with the Support Library -->
     </style>
-    
 
     <style name="ActionBar.Solid.Stage1" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
         <item name="background">@drawable/ab_solid_stage1</item>
@@ -61,11 +58,11 @@
         <item name="background">@drawable/ab_transparent_stage1</item>
         <item name="progressBarStyle">@style/ProgressBar.Stage1</item>
     </style>
-	
-    <style name="PopupMenu.Stage1" parent="@style/Widget.AppCompat.Light.PopupMenu">	
-        <item name="android:popupBackground">@drawable/menu_dropdown_panel_stage1</item>	
+
+    <style name="PopupMenu.Stage1" parent="@style/Widget.AppCompat.Light.PopupMenu">
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_stage1</item>
     </style>
-	
+
     <style name="DropDownListView.Stage1" parent="@style/Widget.AppCompat.Light.ListView.DropDown">
         <item name="android:listSelector">@drawable/selectable_background_stage1</item>
     </style>
@@ -73,21 +70,21 @@
     <style name="ActionBarTabStyle.Stage1" parent="@style/Widget.AppCompat.Light.ActionBar.TabView">
         <item name="android:background">@drawable/tab_indicator_ab_stage1</item>
     </style>
-	
+
     <style name="DropDownNav.Stage1" parent="@style/Widget.AppCompat.Light.Spinner.DropDown.ActionBar">
         <item name="android:background">@drawable/spinner_background_ab_stage1</item>
         <item name="android:popupBackground">@drawable/menu_dropdown_panel_stage1</item>
         <item name="android:dropDownSelector">@drawable/selectable_background_stage1</item>
     </style>
-    
+
     <style name="ProgressBar.Stage1" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/progress_horizontal_stage1</item>
     </style>
-    
+
     <style name="ActionButton.CloseMode.Stage1" parent="@style/Widget.AppCompat.Light.ActionButton.CloseMode">
         <item name="android:background">@drawable/btn_cab_done_stage1</item>
     </style>
-    
+
     <!-- this style is only referenced in a Light.DarkActionBar based theme -->
     <style name="Theme.Stage1.Widget" parent="@style/Theme.AppCompat">
         <item name="popupMenuStyle">@style/PopupMenu.Stage1</item>

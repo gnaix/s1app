@@ -62,13 +62,14 @@ public class Stage1ApiClient {
 
     private WeakReference<FragmentActivity> mActivityRef;
 
-    public int request(Context context, ClientCallback callback, boolean showDialog,
+    public int request(Context context, ClientCallback callback,/* boolean showDialog,*/
             String... params) {
         int id = mCount.getAndIncrement();
         Log.d(Constants.TAG, "current task ID:" + id);
         Stage1AsynTask task = new Stage1AsynTask(context);
         task.setClientCallback(callback);
-        task.setShowDialogWhenRequest(showDialog);
+        //task.setShowDialogWhenRequest(showDialog);
+        task.setTaskID(id);
         task.execute(params);
         //mQueue.add(task);
         return id;
@@ -121,7 +122,7 @@ public class Stage1ApiClient {
         private Context mContext;
         private int mDelay = 100;//默认每个任务延迟100毫秒启动
 
-        private AutoDismissFragmentDialog mDialog;
+        //private AutoDismissFragmentDialog mDialog;
         private ClientCallback mClientCallback;
         private boolean showDialogWhenRequest;
 
@@ -302,10 +303,10 @@ public class Stage1ApiClient {
 
         @Override
         protected void onPostExecute(Result result) {
-            FragmentActivity activity = mActivityRef.get();
+/*            FragmentActivity activity = mActivityRef.get();
             if (mDialog != null && activity != null && !activity.isFinishing()) {
                 mDialog.dismiss();
-            }
+            }*/
             if (getClientCallback() != null) {
                 getClientCallback().onRequestFinish(result);
             }
@@ -320,10 +321,10 @@ public class Stage1ApiClient {
 
         @Override
         protected void onCancelled(Result result) {
-            FragmentActivity activity = mActivityRef.get();
+/*            FragmentActivity activity = mActivityRef.get();
             if (mDialog != null && activity != null && !activity.isFinishing()) {
                 mDialog.dismiss();
-            }
+            }*/
             if (getClientCallback() != null) {
                 getClientCallback().onRequestCancel(result);
             }
@@ -331,7 +332,7 @@ public class Stage1ApiClient {
 
         @Override
         protected void onPreExecute() {
-            if (isShowDialogWhenRequest()) {
+/*            if (isShowDialogWhenRequest()) {
                 mDialog = new AutoDismissFragmentDialog();
                 mDialog.setAutoDismiss(true);
                 mDialog.setAutoDismissListener(this);
@@ -341,24 +342,24 @@ public class Stage1ApiClient {
                 if (activity != null && mDialog != null && !activity.isFinishing()) {
                     mDialog.show(activity.getSupportFragmentManager());
                 }
-            }
+            }*/
         }
 
-        /**
+/*        *//**
          * @return the showDialogWhenRequest
-         */
+         *//*
         public boolean isShowDialogWhenRequest() {
             return showDialogWhenRequest;
         }
 
-        /**
+        *//**
          * @param showDialogWhenRequest
          *            the showDialogWhenRequest to set
-         */
+         *//*
         public void setShowDialogWhenRequest(boolean showDialogWhenRequest) {
             this.showDialogWhenRequest = showDialogWhenRequest;
         }
-
+*/
         /**
          * @return the mClientCallback
          */

@@ -29,60 +29,16 @@ import com.gnaix.app.s1.R;
 import com.gnaix.app.s1.bean.Forum;
 import com.gnaix.app.s1.bean.Group;
 
-public class ForumListFragment extends Fragment implements OnChildClickListener {
+public class ForumListFragment extends PageFragment implements OnChildClickListener {
     private ExpandableListView mListView;
 
     private ForumListAdapter mForumListAdapter;
+    private ArrayList<Group> mGroups;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mForumListAdapter = new ForumListAdapter(getActivity());
-        mListView.setAdapter(mForumListAdapter);
-
-        new AsyncTask<Void, Void, ArrayList<Group>>() {
-
-            @Override
-            protected ArrayList<Group> doInBackground(Void... params) {
-                ArrayList<Group> list = null;
-                try {
-                    XmlPullParserFactory pullParserFactory;
-                    pullParserFactory = XmlPullParserFactory.newInstance();
-                    XmlPullParser parser = pullParserFactory.newPullParser();
-                    InputStream in_s = getActivity().getAssets().open("forumtree.xml");
-                    parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-                    parser.setInput(in_s, null);
-                    list = parseXML(parser);
-                    loadFavForum();
-                } catch (XmlPullParserException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return list;
-            }
-
-            protected void onPostExecute(ArrayList<Group> result) {
-                mForumListAdapter.setData(result);
-                mForumListAdapter.notifyDataSetChanged();
-                if (mListener != null) {
-                    mListener.onLoadFinish(mForumListAdapter.getGroup(0).getForums().get(0));
-                }
-            }
-        }.execute();
-    }
-
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View contentView = inflater.inflate(R.layout.forum_list_layout, container, false);
-        mListView = (ExpandableListView) contentView.findViewById(R.id.list);
-        mListView.setChoiceMode(ExpandableListView.CHOICE_MODE_SINGLE);
-        mListView.setOnChildClickListener(this);
-        return contentView;
+        mGroups = new ArrayList<Group>();
     }
 
     private ArrayList<Group> parseXML(XmlPullParser parser) throws XmlPullParserException, IOException {
@@ -278,6 +234,57 @@ public class ForumListFragment extends Fragment implements OnChildClickListener 
          * @param forum
          */
         public void onLoadFinish(Forum forum);
+    }
+
+    @Override
+    protected int getLayoutRes() {
+        return R.layout.forum_list_layout;
+    }
+
+    @Override
+    public void bindViews() {
+        mListView = (ExpandableListView) getView().findViewById(R.id.list);
+        mListView.setChoiceMode(ExpandableListView.CHOICE_MODE_SINGLE);
+        mListView.setOnChildClickListener(this);
+        mForumListAdapter = new ForumListAdapter(getActivity());
+        mForumListAdapter.setData(mGroups);
+        mListView.setAdapter(mForumListAdapter);
+    }
+
+    @Override
+    public void refresh() {
+        new AsyncTask<Void, Void, ArrayList<Group>>() {
+            @Override
+            protected ArrayList<Group> doInBackground(Void... params) {
+                ArrayList<Group> list = null;
+                try {
+                    XmlPullParserFactory pullParserFactory;
+                    pullParserFactory = XmlPullParserFactory.newInstance();
+                    XmlPullParser parser = pullParserFactory.newPullParser();
+                    InputStream in_s = getActivity().getAssets().open("forumtree.xml");
+                    parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+                    parser.setInput(in_s, null);
+                    list = parseXML(parser);
+                    loadFavForum();
+                } catch (XmlPullParserException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return list;
+            }
+
+            protected void onPostExecute(ArrayList<Group> result) {
+                mGroups.addAll(result);
+                if(mGroups.size()>0) {
+                    setRefreshRequired(false);
+                }
+                mForumListAdapter.notifyDataSetChanged();
+                if (mListener != null) {
+                    mListener.onLoadFinish(mForumListAdapter.getGroup(0).getForums().get(0));
+                }
+            }
+        }.execute();
     }
 
 }
