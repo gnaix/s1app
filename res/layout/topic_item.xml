@@ -33,7 +33,7 @@
                 android:text="1小时前"
                 android:textColor="@color/text_blue"
                 android:textSize="13sp"
-                app:typeface="roboto_thin" />
+                app:typeface="roboto_regular" />
         </LinearLayout>
 
         <com.gnaix.common.ui.RobotoTextView
@@ -60,7 +60,7 @@
                 android:singleLine="true"
                 android:textColor="@color/text_blue"
                 android:textSize="13sp"
-                app:typeface="roboto_thin" />
+                app:typeface="roboto_regular" />
 
             <com.gnaix.common.ui.RobotoTextView
                 android:id="@+id/readTv"
@@ -70,7 +70,7 @@
                 android:text="浏览(102)"
                 android:textColor="@color/text_blue"
                 android:textSize="13sp"
-                app:typeface="roboto_thin" />
+                app:typeface="roboto_regular" />
 
             <com.gnaix.common.ui.RobotoTextView
                 android:id="@+id/replyTv"
@@ -81,7 +81,7 @@
                 android:text="回复(20)"
                 android:textColor="@color/text_blue"
                 android:textSize="13sp"
-                app:typeface="roboto_thin" />
+                app:typeface="roboto_regular" />
         </RelativeLayout>
     </LinearLayout>
 

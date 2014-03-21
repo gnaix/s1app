@@ -4,10 +4,9 @@
     <color name="black">#ff000000</color>
     <color name="black2">#88000000</color>
     <color name="bg_light_gray">#EA363634</color>
-    <color name="text_blue">#FF4261b4</color>
+    <color name="text_blue">#FF022C80</color>
     <color name="light_blue">#FF94cde9</color>
     <color name="holo_blue_light">#ff33b5e5</color>	
-    <color name="forum_title">#FF0F3782</color>    
     <color name="light_yellow">#FFF6F7EB</color>        
     <color name="deep_yellow">#FFCCCC99</color> 
     <color name="banner">#FFD1D9C1</color>

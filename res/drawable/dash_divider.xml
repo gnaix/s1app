@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="line">
     <stroke 
-        android:color="@color/forum_title"
+        android:color="@color/text_blue"
         android:dashGap="3dp"
         android:dashWidth="3dp"
     />

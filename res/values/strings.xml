@@ -10,7 +10,7 @@
     <string name="content_description_indicator">indicator</string>
     <string name="text_not_login">未登录</string>
     <string name="action_login">登录STAGE1</string>
-    <string name="action_back">返回</string>    
+    <string name="action_back">返回</string>
     <string name="text_unknown">未知</string>
     <string name="text_hot_threads">热门主题</string>
     <string name="drawer_open">open drawer</string>
@@ -20,4 +20,7 @@
     <string name="network_retry">重试</string>
     <string name="network_error">无连接</string>
     <string name="timeout_error">连接超时。</string>
+    <string name="user_name">用户名</string>
+    <string name="password">密码</string>
+    <string name="remember_account">记住用户名和密码</string>
 </resources>

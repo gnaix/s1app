@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/text_orange"
             android:textSize="14sp"
-            app:typeface="roboto_thin" />
+            app:typeface="roboto_regular" />
 
         <com.gnaix.common.ui.RobotoTextView
             android:layout_marginLeft="10dip"
@@ -35,7 +35,7 @@
             android:layout_marginLeft="10dip"
             android:textColor="@color/text_blue"
             android:textSize="14sp"
-            app:typeface="roboto_thin" />
+            app:typeface="roboto_regular" />
     </LinearLayout>
 
     <com.gnaix.common.ui.RobotoTextView

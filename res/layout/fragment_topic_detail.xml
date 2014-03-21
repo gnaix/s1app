@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:cacheColorHint="@android:color/transparent"
         android:divider="@drawable/dash_divider"
+        android:listSelector="@null"
         android:fastScrollEnabled="true"
         android:layerType="software" />
 
