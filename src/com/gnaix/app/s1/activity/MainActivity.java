@@ -1,6 +1,5 @@
 package com.gnaix.app.s1.activity;
 
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -9,13 +8,9 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.gnaix.app.s1.Constants;
 import com.gnaix.app.s1.R;
 import com.gnaix.app.s1.activity.ForumListFragment.OnForumSelectedListener;
 import com.gnaix.app.s1.bean.Forum;
@@ -54,13 +49,13 @@ public class MainActivity extends BaseActivity implements OnForumSelectedListene
         mStage1ApiClient = new Stage1ApiClient(this);
         mNavigationManager = new NavigationManager(this);
         mDrawer = findViewById(R.id.left_drawer);
-        
+
         mForumListFragment = new ForumListFragment();
         mForumListFragment.setRefreshRequired(true);
         mForumListFragment.setOnForumSelectedListener(this);
 
         mForumTopicListFragment = new ForumTopicListFragment();
-        
+
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content_frame, mForumTopicListFragment);
         transaction.replace(R.id.left_drawer, mForumListFragment);
@@ -74,8 +69,7 @@ public class MainActivity extends BaseActivity implements OnForumSelectedListene
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 Forum forum = mForumListFragment.getSelectedForum();
-                getSupportActionBar().setTitle(
-                        forum == null ? getText(R.string.text_hot_threads) : forum.getName());
+                getSupportActionBar().setTitle(forum == null ? getText(R.string.text_hot_threads) : forum.getName());
             }
 
             /** Called when a drawer has settled in a completely open state. */
@@ -90,6 +84,7 @@ public class MainActivity extends BaseActivity implements OnForumSelectedListene
         mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -100,7 +95,6 @@ public class MainActivity extends BaseActivity implements OnForumSelectedListene
         }
     }
 
-    
     @Override
     protected void onRestart() {
         super.onRestart();
@@ -118,7 +112,7 @@ public class MainActivity extends BaseActivity implements OnForumSelectedListene
     private int calculateSideDrawerWidth() {
         Resources resources = getResources();
         int widthPixels = resources.getDisplayMetrics().widthPixels;
-        return (int) Math.min(widthPixels / 3 * 2, OSUtil.dip2px(getApplicationContext(), 320));
+        return (int) Math.min(widthPixels * 0.8, OSUtil.dip2px(getApplicationContext(), 320));
     }
 
     @Override
@@ -134,27 +128,12 @@ public class MainActivity extends BaseActivity implements OnForumSelectedListene
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Pass the event to ActionBarDrawerToggle, if it returns
-        // true, then it has handled the app icon touch event
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        if(item.getItemId() == R.id.action_login) {
-            startActivityForResult(new Intent(this,LoginFragment.class), Constants.REQUEST_CODE_LOGIN);
-            return true;
-        }
-        // Handle your other action bar items...
 
-        return super.onOptionsItemSelected(item);
-    }
-    
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_activity_actions, menu);
-        return super.onCreateOptionsMenu(menu);
+    public boolean onSupportNavigateUp() {
+        mNavigationManager.goBack();
+        return super.onSupportNavigateUp();
     }
 
     @Override
@@ -171,7 +150,9 @@ public class MainActivity extends BaseActivity implements OnForumSelectedListene
         mForumTopicListFragment.setArgument("FORUM", forum);
         mForumTopicListFragment.setArgument("PAGE", 1);
         mForumTopicListFragment.setRefreshRequired(true);
-        mNavigationManager.showPage(NavigationManager.PAGE_FROUM_TOPIC, mForumTopicListFragment);
+        if(mNavigationManager.getActivePageType() != NavigationManager.PAGE_FROUM_TOPIC){
+            mNavigationManager.showPage(NavigationManager.PAGE_FROUM_TOPIC, mForumTopicListFragment);
+        }
         mForumTopicListFragment.refresh();
     }
 
@@ -193,8 +174,7 @@ public class MainActivity extends BaseActivity implements OnForumSelectedListene
             if (SystemClock.elapsedRealtime() - lastPressBack < 2000) {
                 super.onBackPressed();
             } else {
-                Toast.makeText(getApplicationContext(), R.string.text_exit_app, Toast.LENGTH_SHORT)
-                        .show();
+                Toast.makeText(getApplicationContext(), R.string.text_exit_app, Toast.LENGTH_SHORT).show();
             }
             lastPressBack = SystemClock.elapsedRealtime();
         }
@@ -219,6 +199,16 @@ public class MainActivity extends BaseActivity implements OnForumSelectedListene
     @Override
     public ActionBar getHostActionBar() {
         return getSupportActionBar();
+    }
+
+    @Override
+    public ActionBarDrawerToggle getHostActionBarDrawerToggle() {
+        return mDrawerToggle;
+    }
+
+    @Override
+    public DrawerLayout getHostDrawerLayout() {
+        return mDrawerLayout;
     }
 
 }

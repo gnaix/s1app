@@ -3,7 +3,6 @@ package com.gnaix.app.s1.activity;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -13,8 +12,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +25,7 @@ import android.widget.TextView;
 import com.gnaix.app.s1.R;
 import com.gnaix.app.s1.bean.Forum;
 import com.gnaix.app.s1.bean.Group;
+import com.gnaix.app.s1.bean.Tag;
 
 public class ForumListFragment extends PageFragment implements OnChildClickListener {
     private ExpandableListView mListView;
@@ -47,6 +45,7 @@ public class ForumListFragment extends PageFragment implements OnChildClickListe
         int eventType = parser.getEventType();
         Group group = null;
         Forum forum = null;
+        Tag tag = null;
         while (eventType != XmlPullParser.END_DOCUMENT) {
             switch (eventType) {
             case XmlPullParser.START_DOCUMENT:
@@ -63,6 +62,11 @@ public class ForumListFragment extends PageFragment implements OnChildClickListe
                     forum.setFid(Integer.parseInt(parser.getAttributeValue(null, "id")));
                     forum.setName(parser.getAttributeValue(null, "name"));
                     group.getForums().add(forum);
+                } else if (name.equals("tag")){
+                    tag = new Tag();
+                    tag.setId(Integer.parseInt(parser.getAttributeValue(null, "id")));
+                    tag.setName(parser.getAttributeValue(null, "name"));
+                    forum.getTags().add(tag);
                 }
                 break;
             case XmlPullParser.END_TAG:

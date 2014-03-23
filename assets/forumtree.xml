@@ -1,79 +1,248 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <stage1st>
-<group name="常用版块">
-	<froum id="999" name="热门主题"/>
-</group>
-<group name="热门新区">
-	<froum id="134" name="热血魔兽"/>
-	<froum id="132" name="炉石传说"/>
-	<froum id="131" name="车"/>
-	<froum id="69" name="怪物猎人"/>
-	<froum id="76" name="车欠女未"/>
-	<froum id="111" name="英雄联盟(LOL)"/>
-	<froum id="60" name="激战2"/>
-</group>
-<group name="主论坛">
-	<froum id="4" name="游戏论坛"/>
-	<froum id="97" name="蛋头电玩贩卖区"/>
-	<froum id="102" name="大众软件精华区"/>
-	<froum id="135" name="手游页游"/>
-	<froum id="6" name="动漫论坛"/>
-	<froum id="83" name="动漫投票鉴赏"/>
-	<froum id="130" name="番且炒弹"/>
-	<froum id="136" name="模玩专区"/>
-	<froum id="48" name="影视论坛"/>
-	<froum id="24" name="音乐论坛"/>
-	<froum id="51" name="ＰＣ数码"/>
-	<froum id="80" name="摄影区"/>
-	<froum id="124" name="开箱区"/>
-	<froum id="50" name="文史沙龙"/>
-	<froum id="120" name="读书会"/>
-	<froum id="31" name="彼岸文化"/>
-	<froum id="77" name="八卦体育"/>
-	<froum id="75" name="外野"/>
-	<froum id="133" name="剑灵"/>
-	<froum id="82" name="网游综合讨论区"/>
-	<froum id="115" name="二手交易区"/>
-</group>
-<group name="外野子论坛">
-	<froum id="123" name="吃货"/>
-	<froum id="93" name="火暴"/>
-	<froum id="74" name="马叉虫"/>
-	<froum id="101" name="犭苗犭句"/>
-	<froum id="87" name="圣？战！日&gt;_"/>
-	<froum id="109" name="菠菜"/>
-	<froum id="71" name="火星"/>
-	<froum id="100" name="哥欠"/>
-</group>
-<group name="网游综合讨论区子论坛">
-	<froum id="110" name="洛奇英雄传"/>
-	<froum id="118" name="真碉堡山 Diablo3"/>
-	<froum id="53" name="魔兽世界"/>
-	<froum id="66" name="光荣网游版"/>
-	<froum id="78" name="地下城勇士(DNF)"/>
-	<froum id="79" name="暴雪游戏专区"/>
-	<froum id="94" name="永恒之塔"/>
-	<froum id="105" name="FF 14"/>
-	<froum id="56" name="梦幻之星 Phantasy Star"/>
-	<froum id="36" name="仙境传说R O."/>
-	<froum id="116" name="剑网3"/>
-	<froum id="113" name="第九大陆C9"/>
-</group>
-<group name="主题公园">
-	<froum id="122" name="将军"/>
-	<froum id="125" name="热血海贼王"/>
-	<froum id="85" name="生化危机共和国"/>
-	<froum id="26" name="女神转生"/>
-	<froum id="45" name="风来西林"/>
-	<froum id="42" name="任天堂专区"/>
-	<froum id="41" name="无双论坛"/>
-	<froum id="43" name="幻水圣域"/>
-	<froum id="46" name="重装机兵"/>
-	<froum id="33" name="异度传说"/>
-	<froum id="49" name="街"/>
-	<froum id="61" name="LIVE A LIVE"/>
-</group>
-<group name="子论坛">
-	<froum id="27">内野</froum>
-</group>
+	<group name="常用版块">
+		<froum id="999" name="热门主题" />
+	</group>
+	<group name="热门新区">
+		<froum id="134" name="热血魔兽" />
+		<froum id="132" name="炉石传说" />
+		<froum id="131" name="车" />
+		<froum id="69" name="怪物猎人" />
+		<froum id="76" name="车欠女未" />
+		<froum id="111" name="英雄联盟(LOL)" />
+		<froum id="60" name="激战2" />
+	</group>
+	<group name="主论坛">
+		<froum id="4" name="游戏论坛">
+			<tag id="1" name="其他" />
+			<tag id="3" name="PSP" />
+			<tag id="5" name="PS3" />
+			<tag id="7" name="XBOX" />
+			<tag id="8" name="PC" />
+			<tag id="9" name="怀旧" />
+			<tag id="10" name="多平台" />
+			<tag id="11" name="3DS" />
+			<tag id="12" name="新闻" />
+			<tag id="13" name="资源" />
+			<tag id="73" name="手游" />
+			<tag id="77" name="PSVita" />
+			<tag id="128" name="Wii U" />
+			<tag id="175" name="青黑无脑不要游戏只求一战" />
+			<tag id="232" name="PS4" />
+			<tag id="233" name="页游" />
+			<tag id="234" name="NDS" />
+			<tag id="235" name="WII" />
+			<tag id="236" name="PS2" />
+			<tag id="238" name="汉化" />
+		</froum>
+		<froum id="97" name="蛋头电玩贩卖区" />
+		<froum id="102" name="大众软件精华区" />
+		<froum id="135" name="手游页游">
+			<tag id="250" name="社交卡游" />
+			<tag id="251" name="ios" />
+			<tag id="252" name="android" />
+			<tag id="253" name="页游" />
+		</froum>
+		<froum id="6" name="动漫论坛">
+			<tag id="14" name="求助" />
+			<tag id="15" name="原创" />
+			<tag id="16" name="新闻" />
+			<tag id="17" name="讨论" />
+			<tag id="18" name="新番" />
+			<tag id="19" name="分享" />
+			<tag id="20" name="恶搞" />
+			<tag id="21" name="声优" />
+			<tag id="75" name="怀旧" />
+			<tag id="76" name="活动" />
+			<tag id="179" name="列举" />
+			<tag id="180" name="求战" />
+			<tag id="181" name="推荐" />
+			<tag id="183" name="美漫" />
+		</froum>
+		<froum id="83" name="动漫投票鉴赏" />
+		<froum id="130" name="番且炒弹" />
+		<froum id="136" name="模玩专区">
+			<tag id="255" name="新品预告" />
+			<tag id="256" name="摄影分享" />
+			<tag id="257" name="测评分析" />
+			<tag id="258" name="喷涂改造" />
+			<tag id="259" name="万代模型" />
+			<tag id="260" name="兽屋模型" />
+			<tag id="261" name="高达模型" />
+			<tag id="262" name="变形金刚" />
+			<tag id="263" name="其他品牌模型" />
+			<tag id="264" name="军事模型" />
+			<tag id="265" name="成品玩具" />
+			<tag id="266" name="特摄" />
+			<tag id="267" name="PVC" />
+			<tag id="268" name="GK" />
+			<tag id="269" name="DD娃娃" />
+			<tag id="270" name="食玩扭蛋" />
+			<tag id="271" name="日西" />
+			<tag id="272" name="战锤" />
+			<tag id="273" name="粘土" />
+			<tag id="274" name="DOLL" />
+		</froum>
+		<froum id="48" name="影视论坛" />
+		<froum id="24" name="音乐论坛" />
+		<froum id="51" name="ＰＣ数码">
+			<tag id="47" name="其他" />
+			<tag id="48" name="硬件" />
+			<tag id="49" name="软件" />
+			<tag id="50" name="外设" />
+			<tag id="51" name="手提" />
+			<tag id="52" name="移动" />
+			<tag id="53" name="数码" />
+			<tag id="137" name="交易" />
+			<tag id="185" name="网络" />
+			<tag id="254" name="新闻" />
+		</froum>
+		<froum id="80" name="摄影区" />
+		<froum id="124" name="开箱区" />
+		<froum id="50" name="文史沙龙">
+			<tag id="39" name="散文" />
+			<tag id="40" name="历史" />
+			<tag id="41" name="文化" />
+			<tag id="42" name="逸闻" />
+			<tag id="43" name="小说" />
+			<tag id="44" name="诗歌" />
+			<tag id="45" name="品评" />
+			<tag id="46" name="推荐" />
+		</froum>
+		<froum id="120" name="读书会" />
+		<froum id="31" name="彼岸文化" />
+		<froum id="77" name="八卦体育">
+			<tag id="58" name="综合" />
+			<tag id="59" name="篮球" />
+			<tag id="60" name="足球" />
+			<tag id="61" name="网球" />
+			<tag id="62" name="赛车" />
+			<tag id="63" name="八卦娱乐" />
+			<tag id="240" name="棋牌乒羽" />
+		</froum>
+		<froum id="75" name="外野">
+			<tag id="138" name="生活" />
+			<tag id="139" name="欢乐" />
+			<tag id="140" name="社会" />
+			<tag id="141" name="海外" />
+			<tag id="142" name="职场" />
+			<tag id="143" name="军普" />
+			<tag id="145" name="桌游" />
+			<tag id="146" name="经济" />
+			<tag id="147" name="育儿" />
+			<tag id="148" name="健康" />
+			<tag id="149" name="3000问求助" />
+			<tag id="150" name="福利" />
+			<tag id="151" name="其他" />
+			<tag id="173" name="科技" />
+			<tag id="174" name="旅游" />
+			<tag id="176" name="读书" />
+		</froum>
+		<froum id="133" name="剑灵" />
+		<froum id="82" name="网游综合讨论区">
+			<tag id="88" name="MMO" />
+			<tag id="89" name="休闲游戏" />
+			<tag id="90" name="网页游戏" />
+			<tag id="91" name="音乐游戏" />
+			<tag id="92" name="其他游戏" />
+		</froum>
+		<froum id="115" name="二手交易区">
+			<tag id="2" name="出售" />
+			<tag id="6" name="求购" />
+		</froum>
+	</group>
+	<group name="外野子论坛">
+		<froum id="123" name="吃货">
+			<tag id="226" name="动手" />
+			<tag id="227" name="动嘴" />
+			<tag id="228" name="分享" />
+			<tag id="229" name="三千问" />
+			<tag id="230" name="吃货槽点多" />
+			<tag id="237" name="吃货战争" />
+		</froum>
+		<froum id="93" name="火暴">
+			<tag id="152" name="男爆" />
+			<tag id="153" name="女爆" />
+			<tag id="154" name="闪光弹" />
+			<tag id="155" name="娃爆" />
+			<tag id="177" name="奇怪爆" />
+		</froum>
+		<froum id="74" name="马叉虫">
+			<tag id="165" name="树洞" />
+			<tag id="166" name="求骂醒" />
+			<tag id="167" name="蛋蛋的忧伤" />
+			<tag id="168" name="闪光弹" />
+			<tag id="169" name="闷骚" />
+			<tag id="170" name="求训导" />
+			<tag id="171" name="缩退跑" />
+			<tag id="172" name="其他" />
+			<tag id="178" name="纯爱" />
+			<tag id="182" name="大傻逼" />
+		</froum>
+		<froum id="101" name="犭苗犭句">
+			<tag id="221" name="喵" />
+			<tag id="222" name="汪" />
+			<tag id="223" name="求助" />
+			<tag id="224" name="经验交流" />
+			<tag id="225" name="福利" />
+			<tag id="231" name="其它" />
+		</froum>
+		<froum id="87" name="圣？战！日&gt;_" />
+		<froum id="109" name="菠菜" />
+		<froum id="71" name="火星" />
+		<froum id="100" name="哥欠" />
+	</group>
+	<group name="网游综合讨论区子论坛">
+		<froum id="110" name="洛奇英雄传" />
+		<froum id="118" name="真碉堡山 Diablo3">
+			<tag id="199" name="亚服讨论" />
+			<tag id="200" name="美服讨论" />
+			<tag id="202" name="亲女儿" />
+			<tag id="203" name="DH" />
+			<tag id="204" name="蛮子" />
+			<tag id="205" name="巫医" />
+			<tag id="206" name="武僧" />
+			<tag id="208" name="剧情" />
+			<tag id="209" name="欧服讨论" />
+			<tag id="211" name="活动" />
+			<tag id="215" name="求教" />
+			<tag id="275" name="圣教军" />
+		</froum>
+		<froum id="53" name="魔兽世界" />
+		<froum id="66" name="光荣网游版" />
+		<froum id="78" name="地下城勇士(DNF)" />
+		<froum id="79" name="暴雪游戏专区" />
+		<froum id="94" name="永恒之塔" />
+		<froum id="105" name="FF 14" />
+		<froum id="56" name="梦幻之星 Phantasy Star" />
+		<froum id="36" name="仙境传说R O." />
+		<froum id="116" name="剑网3" />
+		<froum id="113" name="第九大陆C9" />
+	</group>
+	<group name="主题公园">
+		<froum id="122" name="将军" />
+		<froum id="125" name="热血海贼王" />
+		<froum id="85" name="生化危机共和国" />
+		<froum id="26" name="女神转生" />
+		<froum id="45" name="风来西林" />
+		<froum id="42" name="任天堂专区" />
+		<froum id="41" name="无双论坛" />
+		<froum id="43" name="幻水圣域" />
+		<froum id="46" name="重装机兵" />
+		<froum id="33" name="异度传说" />
+		<froum id="49" name="街" />
+		<froum id="61" name="LIVE A LIVE" />
+	</group>
+	<group name="子论坛">
+		<froum id="27" name="内野">
+			<tag id="80" name="投诉" />
+			<tag id="81" name="bug提交" />
+			<tag id="82" name="账号" />
+			<tag id="83" name="开版申请" />
+			<tag id="84" name="版主自荐" />
+			<tag id="85" name="功能建议" />
+			<tag id="86" name="其他" />
+			<tag id="87" name="友情链接" />
+		</froum>
+	</group>
 </stage1st>

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.gnaix.app.s1.R;
+import com.gnaix.app.s1.bean.Forum;
 import com.gnaix.app.s1.bean.Post;
 import com.gnaix.app.s1.bean.Topic;
 import com.gnaix.app.s1.service.Stage1ApiClient;
@@ -37,9 +39,20 @@ public class TopicDetialFragment extends PageFragment implements Stage1ApiClient
     }
 
     @Override
+    public void rebindActionBar() {
+        Forum forum = getArguments().getParcelable("FORUM");
+        if(forum != null){
+            getPageFragmentHost().getHostActionBar().setTitle(forum.getName());
+        }
+        getPageFragmentHost().getHostActionBar().setDisplayHomeAsUpEnabled(true);
+        getPageFragmentHost().getHostActionBar().setHomeButtonEnabled(true);
+        getPageFragmentHost().getHostActionBar().setDisplayShowHomeEnabled(false);
+        getPageFragmentHost().getHostActionBarDrawerToggle().setDrawerIndicatorEnabled(false);
+    }
+    
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.topic_list_fragment_actions, menu);
-        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
     }
 
     @Override
@@ -142,6 +155,8 @@ public class TopicDetialFragment extends PageFragment implements Stage1ApiClient
 
     @Override
     public void bindViews() {
+        setHasOptionsMenu(true);
+        rebindActionBar();
         mListView = (ListView) findViewById(R.id.list);
         mSubjectTv = (TextView) findViewById(R.id.subjectTv);
         mPostListAdapter = new PostListAdapter(getActivity());
@@ -164,11 +179,6 @@ public class TopicDetialFragment extends PageFragment implements Stage1ApiClient
     @Override
     protected int getLayoutRes() {
         return R.layout.fragment_topic_detail;
-    }
-    
-    @Override
-    public void rebindActionBar() {
-        
     }
 
 }

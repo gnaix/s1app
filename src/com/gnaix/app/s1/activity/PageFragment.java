@@ -50,6 +50,7 @@ public abstract class PageFragment extends Fragment {
         bindViews();
         this.mSaveInstanceStateCalled = false;
     }
+    
 
     public abstract void bindViews();
 
@@ -196,7 +197,6 @@ public abstract class PageFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         Log.d(Constants.TAG, getClass().getSimpleName() + " onDestroyView()");
-        this.mDataView = null;
     }
 
     @Override

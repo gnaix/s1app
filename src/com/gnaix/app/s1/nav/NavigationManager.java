@@ -18,6 +18,8 @@ public class NavigationManager {
     public static final int PAGE_FROUM_TOPIC = 1;
     public static final int PAGE_TOPIC_POST = 2;
     public static final int PAGE_TOPIC_DETAIL = 3;
+    public static final int PAGE_LOGIN = 4;
+    public static final int PAGE_UNKNOWN = -1;
 
     public NavigationManager(MainActivity activity) {
         init(activity);
@@ -32,6 +34,14 @@ public class NavigationManager {
         this.mBackStack.removeAllElements();
         while (this.mFragmentManager.getBackStackEntryCount() > 0) {
             this.mFragmentManager.popBackStackImmediate();
+        }
+    }
+    
+    public int getActivePageType(){
+        if(!mBackStack.isEmpty()){
+            return mBackStack.peek().pageType;
+        }else{
+            return PAGE_UNKNOWN;
         }
     }
 

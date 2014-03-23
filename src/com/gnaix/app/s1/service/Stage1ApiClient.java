@@ -145,7 +145,7 @@ public class Stage1ApiClient {
             mContext = context.getApplicationContext();
         }
 
-        public ArrayList<Topic> getForumTopic(int fid, int page) throws IOException {
+        public ArrayList<Topic> getForumTopic(int fid, int page) throws Exception {
             Gson gson = new Gson();
             HttpPost request = new HttpPost(Constants.SERVER_BASE + Constants.URI_TOPIC_LIST);
             List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -180,7 +180,7 @@ public class Stage1ApiClient {
          * @return
          * @throws IOException
          */
-        public ArrayList<Post> getTopicPost(int tid, int page) throws IOException {
+        public ArrayList<Post> getTopicPost(int tid, int page) throws Exception {
             Gson gson = new Gson();
             HttpPost request = new HttpPost(Constants.SERVER_BASE + Constants.URI_POST_LIST);
             List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -209,7 +209,7 @@ public class Stage1ApiClient {
             return null;
         }
 
-        public ArrayList<Topic> getHotTopic() throws IOException {
+        public ArrayList<Topic> getHotTopic() throws Exception {
             Gson gson = new Gson();
             HttpGet request = new HttpGet(Constants.SERVER_BASE + Constants.URI_HOT_TOPIC_LIST);
             AndroidHttpClient.modifyRequestToAcceptGzipResponse(request);
@@ -258,7 +258,7 @@ public class Stage1ApiClient {
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
                     fillFailedResult(apiCode, e.getMessage(), SC_ILLEGAL_ARGUMENT, result);
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     fillFailedResult(apiCode, e.getMessage(), SC_QEQUEST_FAIL, result);
                 }
@@ -266,7 +266,7 @@ public class Stage1ApiClient {
             case API_REQUEST_HOT_TOPIC_LIST:
                 try {
                     fillSuccessResult(apiCode, getHotTopic(), result);
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     fillFailedResult(apiCode, e.getMessage(), SC_QEQUEST_FAIL, result);
                 }
@@ -279,7 +279,7 @@ public class Stage1ApiClient {
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
                     fillFailedResult(apiCode, e.getMessage(), SC_ILLEGAL_ARGUMENT, result);
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     fillFailedResult(apiCode, e.getMessage(), SC_QEQUEST_FAIL, result);
                 }
