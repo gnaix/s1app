@@ -12,6 +12,8 @@ public final class Constants {
     public static final String URI_TOPIC_LIST = "api/mobile/index.php?mobile=no&version=1&module=forumdisplay&submodule=checkpost&orderby=dateline";
     
     public static final String URI_POST_LIST = "api/mobile/index.php?mobile=no&version=1&module=viewthread&submodule=checkpost";
+
+    public static final String URI_LOGIN = "member.php?mod=logging&action=login&loginsubmit=yes&infloat=yes&lssubmit=yes&inajax=1";
     
     public static final String URI_PUBLISH_TOPIC = "";
     public static final String URI_REPLY_TOPIC = "";

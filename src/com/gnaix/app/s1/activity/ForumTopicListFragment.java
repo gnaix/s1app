@@ -127,7 +127,7 @@ public class ForumTopicListFragment extends PageFragment implements OnItemClickL
         }
         if (item.getItemId() == R.id.action_login) {
             mLoginFragment = new LoginFragment();
-            mLoginFragment.setRefreshRequired(true);
+            mLoginFragment.setRefreshRequired(false);
             mNavigationManager.showPage(NavigationManager.PAGE_LOGIN, mLoginFragment);
             return true;
         }
@@ -147,12 +147,9 @@ public class ForumTopicListFragment extends PageFragment implements OnItemClickL
         Forum forum = getArguments().getParcelable("FORUM");
 
         if (forum == null || Constants.ID_HOT_TOPIC_FROUM == forum.getFid()) {
-            taskIDRefresh = mPageFragmentHost.getS1Api().request(getActivity(), this,
-                    String.valueOf(Stage1ApiClient.API_REQUEST_HOT_TOPIC_LIST), String.valueOf(0),
-                    String.valueOf(currentPage));
+            taskIDRefresh = mPageFragmentHost.getS1Api().getHotTopic(this);
         } else {
-            taskIDRefresh = mPageFragmentHost.getS1Api().request(getActivity(), this, String.valueOf(Stage1ApiClient.API_REQUEST_FORUM_TOPIC_LIST),
-                    String.valueOf(forum.getFid()), String.valueOf(currentPage));
+            taskIDRefresh = mPageFragmentHost.getS1Api().getForumTopic(this,forum.getFid(), currentPage);
         }
     }
 

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +39,7 @@ public abstract class PageFragment extends Fragment {
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Log.d(Constants.TAG, getClass().getSimpleName() + " onActivityCreated()");
+        Log.d(Constants.TAG, ((Object)this).getClass().getSimpleName() + " onActivityCreated()");
         if (!(getActivity() instanceof PageFragmentHost)) {
             throw new IllegalAccessError("Host activity must implement PageFragmentHost");
         }
@@ -64,49 +65,42 @@ public abstract class PageFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        Log.d(Constants.TAG, getClass().getSimpleName() + " onAttach()");
+        Log.d(Constants.TAG, ((Object)this).getClass().getSimpleName() + " onAttach()");
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.d(Constants.TAG, getClass().getSimpleName() + " onDetach()");
+        Log.d(Constants.TAG, ((Object)this).getClass().getSimpleName() + " onDetach()");
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.mSaveInstanceStateCalled = false;
-        Log.d(Constants.TAG, getClass().getSimpleName() + " onCreate()");
+        Log.d(Constants.TAG, ((Object)this).getClass().getSimpleName() + " onCreate()");
     }
 
     public void onSaveInstanceState(Bundle paramBundle) {
         this.mSaveInstanceStateCalled = true;
-        Log.d(Constants.TAG, getClass().getSimpleName() + " onSaveInstanceState()");
+        Log.d(Constants.TAG, ((Object)this).getClass().getSimpleName() + " onSaveInstanceState()");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(Constants.TAG, getClass().getSimpleName() + " onResume()");
-        MobclickAgent.onPageStart(getClass().getSimpleName());
+        Log.d(Constants.TAG, ((Object)this).getClass().getSimpleName() + " onResume()");
+        MobclickAgent.onPageStart(((Object)this).getClass().getSimpleName());
         this.mSaveInstanceStateCalled = false;
         if (this.isRefreshRequired()) {
             refresh();
         }
     }
 
-    public void onDataChanged() {
-        if (isAdded()) {
-            this.mRefreshRequired = false;
-            bindViews();
-        }
-        this.mRefreshRequired = true;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d(Constants.TAG, getClass().getSimpleName() + " onCreateView()");
+        Log.d(Constants.TAG, ((Object)this).getClass().getSimpleName() + " onCreateView()");
         this.mSaveInstanceStateCalled = false;
         View contentView = inflater.inflate(R.layout.fragment_host, container, false);
         mloadingIndicator = contentView.findViewById(R.id.loading_indicator);
@@ -133,7 +127,7 @@ public abstract class PageFragment extends Fragment {
     public void showLoadingIndicator() {
         mloadingIndicator.setVisibility(View.VISIBLE);
         mErrorIndicator.setVisibility(View.GONE);
-        mDataView.setVisibility(View.VISIBLE);
+        mDataView.setVisibility(View.GONE);
     }
 
     public void onRetry() {
@@ -142,6 +136,7 @@ public abstract class PageFragment extends Fragment {
 
     public void showErrorIndicator(String errorMsg) {
         mloadingIndicator.setVisibility(View.GONE);
+        mDataView.setVisibility(View.GONE);
         mErrorIndicator.setVisibility(View.VISIBLE);
         mErrorMsgTv.setText(errorMsg);
         mRetryButton.setOnClickListener(new OnClickListener() {
@@ -155,10 +150,14 @@ public abstract class PageFragment extends Fragment {
 
     public void hideErrorIndicator() {
         mErrorIndicator.setVisibility(View.GONE);
+        mloadingIndicator.setVisibility(View.GONE);
+        mDataView.setVisibility(View.VISIBLE);
     }
 
     public void hideLoadingIndicator() {
         mloadingIndicator.setVisibility(View.GONE);
+        mErrorIndicator.setVisibility(View.GONE);
+        mDataView.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -171,7 +170,7 @@ public abstract class PageFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        MobclickAgent.onPageEnd(getClass().getSimpleName());
+        MobclickAgent.onPageEnd(((Object)this).getClass().getSimpleName());
     }
 
     protected void setArgument(String key, Parcelable value) {
@@ -196,13 +195,13 @@ public abstract class PageFragment extends Fragment {
 
     public void onDestroyView() {
         super.onDestroyView();
-        Log.d(Constants.TAG, getClass().getSimpleName() + " onDestroyView()");
+        Log.d(Constants.TAG, ((Object)this).getClass().getSimpleName() + " onDestroyView()");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d(Constants.TAG, getClass().getSimpleName() + " onDestroy()");
+        Log.d(Constants.TAG, ((Object)this).getClass().getSimpleName() + " onDestroy()");
     }
 
     /**

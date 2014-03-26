@@ -171,9 +171,7 @@ public class TopicDetialFragment extends PageFragment implements Stage1ApiClient
         Topic topic = getArguments().getParcelable("TOPIC");
         mSubjectTv.setText(topic.getSubject());
         currentPage = getArguments().getInt("PAGE");
-        taskIDRefresh = getPageFragmentHost().getS1Api().request(getActivity(), this,
-                String.valueOf(Stage1ApiClient.API_REQUEST_TOPIC_POST_LIST), String.valueOf(topic.getTid()),
-                String.valueOf(currentPage));
+        taskIDRefresh = getPageFragmentHost().getS1Api().getTopicPost(this,topic.getTid(),currentPage);
     }
 
     @Override
