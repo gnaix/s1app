@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
+import java.net.SocketTimeoutException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,6 +18,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import android.content.res.Resources;
+import com.gnaix.app.s1.R;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
@@ -29,6 +32,9 @@ import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
@@ -58,7 +64,6 @@ import com.google.gson.Gson;
 public class Stage1ApiClient {
     public static final int SC_QEQUEST_FAIL = -11;
     public static final int SC_ILLEGAL_ARGUMENT = -12;
-    public static final int SC_NETWORK_ERROE = -13;
     public static final int SC_QEQUEST_SUCCESS = 200;
 
     /**
@@ -81,6 +86,7 @@ public class Stage1ApiClient {
 
     private CookieStore cookieStore;
     private HttpContext mHttpContext;
+    private Resources mResource;
 
     private static final String KEY_API_CODE = "KEY_API_CODE";
 
@@ -105,8 +111,10 @@ public class Stage1ApiClient {
         return request(callback, params);
     }
 
-    public int getHotTopic(ClientCallback callback) {
-        return request(callback, generateBundle(API_REQUEST_HOT_TOPIC_LIST));
+    public int getHotTopic(ClientCallback callback,int page) {
+        Bundle params = generateBundle(API_REQUEST_HOT_TOPIC_LIST);
+        params.putInt("page", page);
+        return request(callback,params);
     }
 
     public int getForumTopic(ClientCallback callback, int fid, int page) {
@@ -132,6 +140,10 @@ public class Stage1ApiClient {
     public Stage1ApiClient(final FragmentActivity activity) {
         this.mActivityRef = new WeakReference<FragmentActivity>(activity);
         mHttpClient = AndroidHttpClient.newInstance(USER_AGENT, activity.getApplicationContext());
+        mResource = activity.getApplicationContext().getResources();
+        HttpConnectionParams.setConnectionTimeout(mHttpClient.getParams(), 5000);
+        HttpConnectionParams.setSoTimeout(mHttpClient.getParams(), 30000);
+
         setCookieStore(new BasicCookieStore());
         mHttpContext = new SyncBasicHttpContext(new BasicHttpContext());
         mHttpContext.setAttribute(ClientContext.COOKIE_STORE, getCookieStore());
@@ -290,12 +302,12 @@ public class Stage1ApiClient {
             return null;
         }
 
-        private ArrayList<Topic> getHotTopic() throws Exception {
+        private ArrayList<Topic> getHotTopic(int page) throws Exception {
             Gson gson = new Gson();
-            HttpGet request = new HttpGet(Constants.SERVER_BASE + Constants.URI_HOT_TOPIC_LIST);
-            AndroidHttpClient.modifyRequestToAcceptGzipResponse(request);
+            HttpGet request = new HttpGet(Constants.SERVER_BASE + Constants.URI_HOT_TOPIC_LIST+"&page="+page);
             InputStream in = null;
             try {
+                AndroidHttpClient.modifyRequestToAcceptGzipResponse(request);
                 HttpResponse response = mHttpClient.execute(request, mHttpContext);
                 if (response != null && response.getStatusLine() != null
                         && response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
@@ -336,20 +348,18 @@ public class Stage1ApiClient {
                     int fid = mParams.getInt("fid");
                     int page = mParams.getInt("page");
                     fillSuccessResult(apiCode, getForumTopic(fid, page), result);
-                } catch (NumberFormatException e) {
+                }catch (Exception e) {
                     e.printStackTrace();
-                    fillFailedResult(apiCode, e.getMessage(), SC_ILLEGAL_ARGUMENT, result);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    fillFailedResult(apiCode, e.getMessage(), SC_QEQUEST_FAIL, result);
+                    fillFailedResult(apiCode, mResource.getString(R.string.msg_failed), SC_QEQUEST_FAIL, result);
                 }
                 break;
             case API_REQUEST_HOT_TOPIC_LIST:
                 try {
-                    fillSuccessResult(apiCode, getHotTopic(), result);
-                } catch (Exception e) {
+                    int page = mParams.getInt("page");
+                    fillSuccessResult(apiCode, getHotTopic(page), result);
+                }catch (Exception e) {
                     e.printStackTrace();
-                    fillFailedResult(apiCode, e.getMessage(), SC_QEQUEST_FAIL, result);
+                    fillFailedResult(apiCode, mResource.getString(R.string.msg_failed), SC_QEQUEST_FAIL, result);
                 }
                 break;
             case API_REQUEST_TOPIC_POST_LIST:
@@ -357,12 +367,9 @@ public class Stage1ApiClient {
                     int tid = mParams.getInt("tid");
                     int page = mParams.getInt("page");
                     fillSuccessResult(apiCode, getTopicPost(tid, page), result);
-                } catch (NumberFormatException e) {
+                }catch (Exception e) {
                     e.printStackTrace();
-                    fillFailedResult(apiCode, e.getMessage(), SC_ILLEGAL_ARGUMENT, result);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    fillFailedResult(apiCode, e.getMessage(), SC_QEQUEST_FAIL, result);
+                    fillFailedResult(apiCode, mResource.getString(R.string.msg_failed), SC_QEQUEST_FAIL, result);
                 }
                 break;
             case API_REQUEST_LOGIN:
@@ -372,7 +379,7 @@ public class Stage1ApiClient {
                     fillSuccessResult(apiCode, login(username, password), result);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    fillFailedResult(apiCode, e.getMessage(), SC_QEQUEST_FAIL, result);
+                    fillFailedResult(apiCode, mResource.getString(R.string.msg_failed), SC_QEQUEST_FAIL, result);
                 }
                 break;
             }

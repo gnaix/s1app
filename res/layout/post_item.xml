@@ -4,9 +4,11 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:scrollbars="none"
     android:padding="10dip" >
 
     <LinearLayout
+        android:scrollbars="none"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
@@ -45,6 +47,7 @@
         android:layout_marginTop="5dp"
         android:textColor="@color/text_blue"
         android:textSize="16sp"
+        android:textIsSelectable="true"
         app:typeface="roboto_regular" />
 
 </LinearLayout>

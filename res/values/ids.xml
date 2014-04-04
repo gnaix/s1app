@@ -2,7 +2,6 @@
 <resources>
 
     <item name="frame_content" type="id">false</item>
-    <item name="list" type="id">false</item>
     <item name="image1" type="id">false</item>
     <item name="image2" type="id">false</item>
     <item name="text1" type="id">false</item>

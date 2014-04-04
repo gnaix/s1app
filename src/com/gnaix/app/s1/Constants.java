@@ -4,7 +4,7 @@ public final class Constants {
     public static final String TAG = "Stage1st";
     public static final String SERVER_BASE = "http://bbs.saraba1st.com/2b/";
     
-    public static final int PAGE_SIZE = 20;
+    public static final int PAGE_SIZE = 15;
     public static final int ID_HOT_TOPIC_FROUM = 999;
 
     public static final String URI_FORUM_LIST = "api/mobile/index.php?mobile=no&version=1&module=forumindex";

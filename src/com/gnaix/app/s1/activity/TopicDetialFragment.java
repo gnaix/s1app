@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,22 +14,26 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.gnaix.app.s1.Constants;
 import com.gnaix.app.s1.R;
 import com.gnaix.app.s1.bean.Forum;
 import com.gnaix.app.s1.bean.Post;
 import com.gnaix.app.s1.bean.Topic;
 import com.gnaix.app.s1.service.Stage1ApiClient;
 import com.gnaix.app.s1.service.Stage1ApiClient.Result;
+import com.gnaix.common.ui.PullRefreshListView;
+import com.gnaix.common.ui.PullRefreshListView.OnPullListener;
 
-public class TopicDetialFragment extends PageFragment implements Stage1ApiClient.ClientCallback {
+public class TopicDetialFragment extends PageFragment implements Stage1ApiClient.ClientCallback, OnPullListener {
 
-    private ListView mListView;
+    private PullRefreshListView mListView;
     private TextView mSubjectTv;
     private PostListAdapter mPostListAdapter;
     private ArrayList<Post> mPostList;
     
     private int currentPage =1;
     private int taskIDRefresh;
+    private int taskIDLoadMore;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -122,21 +125,27 @@ public class TopicDetialFragment extends PageFragment implements Stage1ApiClient
     @Override
     public void onRequestFinish(Result result) {
         hideLoadingIndicator();
-        if (result.statueCode == Stage1ApiClient.SC_QEQUEST_SUCCESS
-                && result.apiCode == Stage1ApiClient.API_REQUEST_TOPIC_POST_LIST) {
-            ArrayList<Post> list = (ArrayList<Post>) result.mData;
-            if (result.messageID == taskIDRefresh) {
-                mPostList.clear();
+        if(result.statueCode == Stage1ApiClient.SC_QEQUEST_SUCCESS) {
+            if(result.apiCode == Stage1ApiClient.API_REQUEST_TOPIC_POST_LIST) {
+                ArrayList<Post> list = (ArrayList<Post>) result.mData;
+                if (result.messageID == taskIDRefresh) {
+                    mPostList.clear();
+                    mListView.completeRefresh();
+                }else if(result.messageID == taskIDLoadMore){
+                    currentPage++;
+                    mListView.completeLoadMore();
+                }
+                mPostList.addAll(list);
+                if (mPostList.size() > 0) {
+                    setRefreshRequired(false);
+                }
+                mPostListAdapter.notifyDataSetChanged();
             }
-            mPostList.addAll(list);
-            if(mPostList.size()>0) {
-                setRefreshRequired(false);
-            }
-            mPostListAdapter.notifyDataSetChanged();
         }else {
-            showErrorIndicator(result.message);
+            if(result.messageID == taskIDRefresh) {
+                showErrorIndicator(result.message);
+            }
         }
-        
     }
     
     
@@ -157,7 +166,8 @@ public class TopicDetialFragment extends PageFragment implements Stage1ApiClient
     public void bindViews() {
         setHasOptionsMenu(true);
         rebindActionBar();
-        mListView = (ListView) findViewById(R.id.list);
+        mListView = (PullRefreshListView) findViewById(R.id.post_list);
+        mListView.setOnPullListener(this);
         mSubjectTv = (TextView) findViewById(R.id.subjectTv);
         mPostListAdapter = new PostListAdapter(getActivity());
         mPostListAdapter.setPostList(mPostList);
@@ -170,13 +180,26 @@ public class TopicDetialFragment extends PageFragment implements Stage1ApiClient
         showLoadingIndicator();
         Topic topic = getArguments().getParcelable("TOPIC");
         mSubjectTv.setText(topic.getSubject());
-        currentPage = getArguments().getInt("PAGE");
-        taskIDRefresh = getPageFragmentHost().getS1Api().getTopicPost(this,topic.getTid(),currentPage);
+        taskIDRefresh = getPageFragmentHost().getS1Api().getTopicPost(this,topic.getTid(),currentPage=0);
     }
 
     @Override
     protected int getLayoutRes() {
         return R.layout.fragment_topic_detail;
+    }
+
+    @Override
+    public void onPullRefresh() {
+        refresh();
+    }
+
+    @Override
+    public void onLoadMore() {
+        Topic topic = getArguments().getParcelable("TOPIC");
+        int totalPage= (int) Math.ceil(((float)topic.getReplies()) / Constants.PAGE_SIZE);
+        if(currentPage < totalPage) {
+            taskIDLoadMore = getPageFragmentHost().getS1Api().getTopicPost(this,topic.getTid(),currentPage+1);
+        }
     }
 
 }

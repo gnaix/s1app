@@ -31,7 +31,6 @@ public abstract class PageFragment extends Fragment {
     protected View mloadingIndicator, mErrorIndicator;
     protected TextView mErrorMsgTv;
     protected Button mRetryButton;
-    protected boolean mIsDataReady;
 
     protected PageFragment() {
         setArguments(new Bundle());
@@ -127,7 +126,6 @@ public abstract class PageFragment extends Fragment {
     public void showLoadingIndicator() {
         mloadingIndicator.setVisibility(View.VISIBLE);
         mErrorIndicator.setVisibility(View.GONE);
-        mDataView.setVisibility(View.GONE);
     }
 
     public void onRetry() {
@@ -136,7 +134,6 @@ public abstract class PageFragment extends Fragment {
 
     public void showErrorIndicator(String errorMsg) {
         mloadingIndicator.setVisibility(View.GONE);
-        mDataView.setVisibility(View.GONE);
         mErrorIndicator.setVisibility(View.VISIBLE);
         mErrorMsgTv.setText(errorMsg);
         mRetryButton.setOnClickListener(new OnClickListener() {
@@ -151,13 +148,11 @@ public abstract class PageFragment extends Fragment {
     public void hideErrorIndicator() {
         mErrorIndicator.setVisibility(View.GONE);
         mloadingIndicator.setVisibility(View.GONE);
-        mDataView.setVisibility(View.VISIBLE);
     }
 
     public void hideLoadingIndicator() {
         mloadingIndicator.setVisibility(View.GONE);
         mErrorIndicator.setVisibility(View.GONE);
-        mDataView.setVisibility(View.VISIBLE);
     }
 
     /**

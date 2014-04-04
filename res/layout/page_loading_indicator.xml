@@ -3,7 +3,6 @@
     android:id="@+id/loading_indicator"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/light_yellow"
     android:gravity="center"
     android:padding="32.0dip" >
 

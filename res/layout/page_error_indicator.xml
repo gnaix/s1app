@@ -15,14 +15,14 @@
         android:gravity="center"
         android:paddingLeft="20.0dip"
         android:paddingRight="20.0dip"
-        android:text="@string/text_bala"
+        android:text="@string/msg_failed"
         android:textAppearance="?android:textAppearanceLarge"
         android:textColor="@color/text_orange" />
 
     <Button
         android:textColor="@color/text_blue"
         android:id="@+id/retry_button"
-        android:layout_width="80dp"
+        android:layout_width="90dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="16.0dip"

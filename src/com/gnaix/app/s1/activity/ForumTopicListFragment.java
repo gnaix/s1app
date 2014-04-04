@@ -9,9 +9,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.gnaix.app.s1.Constants;
 import com.gnaix.app.s1.R;
@@ -20,16 +20,20 @@ import com.gnaix.app.s1.bean.Topic;
 import com.gnaix.app.s1.nav.NavigationManager;
 import com.gnaix.app.s1.service.Stage1ApiClient;
 import com.gnaix.app.s1.service.Stage1ApiClient.Result;
+import com.gnaix.common.ui.PullRefreshListView;
+import com.gnaix.common.ui.PullRefreshListView.OnPullListener;
 
-public class ForumTopicListFragment extends PageFragment implements OnItemClickListener, Stage1ApiClient.ClientCallback {
+public class ForumTopicListFragment extends PageFragment implements OnItemClickListener, Stage1ApiClient.ClientCallback, OnPullListener {
 
-    private ListView mListView;
+    private PullRefreshListView mListView;
     private TopicListAdapter mTopicListAdapter;
     private int currentPage = 1;
     private TopicDetialFragment mTopicDetialFragment;
     private int taskIDRefresh;
+    private int taskIDLoadMore;
     private ArrayList<Topic> mTopicList;
     private LoginFragment mLoginFragment;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,19 +72,26 @@ public class ForumTopicListFragment extends PageFragment implements OnItemClickL
     @Override
     public void onRequestFinish(Result result) {
         hideLoadingIndicator();
-        if (result.statueCode == Stage1ApiClient.SC_QEQUEST_SUCCESS
-                && (result.apiCode == Stage1ApiClient.API_REQUEST_FORUM_TOPIC_LIST || result.apiCode == Stage1ApiClient.API_REQUEST_HOT_TOPIC_LIST)) {
-            ArrayList<Topic> list = (ArrayList<Topic>) result.mData;
-            if (result.messageID == taskIDRefresh) {
-                mTopicList.clear();
+        if(result.statueCode == Stage1ApiClient.SC_QEQUEST_SUCCESS) {
+            if(result.apiCode == Stage1ApiClient.API_REQUEST_FORUM_TOPIC_LIST || result.apiCode == Stage1ApiClient.API_REQUEST_HOT_TOPIC_LIST) {
+                ArrayList<Topic> list = (ArrayList<Topic>) result.mData;
+                if (result.messageID == taskIDRefresh) {
+                    mTopicList.clear();
+                    mListView.completeRefresh();
+                }else if(result.messageID == taskIDLoadMore) {
+                    currentPage++;
+                    mListView.completeLoadMore();
+                }
+                mTopicList.addAll(list);
+                if (mTopicList.size() > 0) {
+                    setRefreshRequired(false);
+                }
+                mTopicListAdapter.notifyDataSetChanged();
             }
-            mTopicList.addAll(list);
-            if (mTopicList.size() > 0) {
-                setRefreshRequired(false);
+        }else {
+            if(result.messageID == taskIDRefresh) {
+                showErrorIndicator(result.message);
             }
-            mTopicListAdapter.notifyDataSetChanged();
-        } else {
-            showErrorIndicator(result.message);
         }
     }
 
@@ -102,10 +113,12 @@ public class ForumTopicListFragment extends PageFragment implements OnItemClickL
         rebindActionBar();
         mTopicListAdapter = new TopicListAdapter(getActivity());
         mTopicListAdapter.setTopicList(mTopicList);
-        mListView = (ListView) findViewById(R.id.list);
+        mListView = (PullRefreshListView) findViewById(R.id.topic_list);
+        mListView.setOnPullListener(this);
         mListView.setAdapter(mTopicListAdapter);
         mListView.setOnItemClickListener(this);
         mTopicListAdapter.notifyDataSetChanged();
+
     }
 
     @Override
@@ -143,13 +156,11 @@ public class ForumTopicListFragment extends PageFragment implements OnItemClickL
     @Override
     public void refresh() {
         showLoadingIndicator();
-        currentPage = getArguments().getInt("PAGE");
         Forum forum = getArguments().getParcelable("FORUM");
-
         if (forum == null || Constants.ID_HOT_TOPIC_FROUM == forum.getFid()) {
-            taskIDRefresh = mPageFragmentHost.getS1Api().getHotTopic(this);
+            taskIDRefresh = mPageFragmentHost.getS1Api().getHotTopic(this,currentPage=0);
         } else {
-            taskIDRefresh = mPageFragmentHost.getS1Api().getForumTopic(this,forum.getFid(), currentPage);
+            taskIDRefresh = mPageFragmentHost.getS1Api().getForumTopic(this,forum.getFid(), currentPage=0);
         }
     }
 
@@ -166,4 +177,25 @@ public class ForumTopicListFragment extends PageFragment implements OnItemClickL
         getPageFragmentHost().getHostActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
         getPageFragmentHost().getHostDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
     }
+
+    @Override
+    public void onRetry() {
+        refresh();
+    }
+
+    @Override
+    public void onPullRefresh() {
+        refresh();        
+    }
+
+    @Override
+    public void onLoadMore() {
+        Forum forum = getArguments().getParcelable("FORUM");
+        if (forum == null || Constants.ID_HOT_TOPIC_FROUM == forum.getFid()) {
+            taskIDLoadMore = mPageFragmentHost.getS1Api().getHotTopic(this,currentPage+1);
+        } else {
+            taskIDLoadMore = mPageFragmentHost.getS1Api().getForumTopic(this,forum.getFid(), currentPage+1);
+        }
+    }
+
 }

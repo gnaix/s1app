@@ -22,6 +22,7 @@
 	<string name="network_retry">重试</string>
 	<string name="network_error">无连接</string>
 	<string name="timeout_error">连接超时。</string>
+    <string name="msg_failed">Σ(●ﾟдﾟ●)请求失败啦</string>
 	<string name="user_name">用户名</string>
 	<string name="password">密码</string>
 	<string name="remember_account">记住用户名和密码</string>
@@ -29,4 +30,5 @@
     <string name="text_login_stage1">登录STAGE1</string>	
 	<string name="msg_input_username">请输入用户名</string>
 	<string name="msg_input_pwd">请输入密码</string>
+    <string name="send">发送</string>
 </resources>
