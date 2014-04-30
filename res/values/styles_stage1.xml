@@ -27,9 +27,14 @@
 		<item name="android:editTextStyle">@style/EditText.Stage1</item>
 		<item name="android:checkboxStyle">@style/CheckBox.Stage1</item>
 		<item name="android:radioButtonStyle">@style/RadioButton.Stage1</item>
+        <item name="android:buttonStyle">@style/Button.Stage1</item>
 	</style>
 
-
+  <style name="Button.Stage1" parent="android:Widget.Button">
+      <item name="android:background">@drawable/button_stage1</item>
+      <item name="android:textColor">@color/text_blue</item>
+  </style>
+	
   <style name="EditText.Stage1" parent="android:Widget.EditText">
       <item name="android:background">@drawable/stage1theme_edit_text_holo_light</item>
       <item name="android:textColor">@color/text_blue</item>

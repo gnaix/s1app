@@ -1,35 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
     <com.gnaix.common.ui.RobotoTextView
-            android:id="@+id/subjectTv"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dip"
-            android:textColor="@color/text_blue"
-            android:textSize="17sp"
-            app:typeface="roboto_bold"/>
+        android:id="@+id/subjectTv"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dip"
+        android:textColor="@color/text_blue"
+        android:textSize="17sp"
+        app:typeface="roboto_bold" />
 
     <com.gnaix.common.ui.PullRefreshListView
-            android:id="@+id/post_list"
-            android:layout_width="fill_parent"
-            android:layout_weight="1"
-            android:layout_height="0dp"
-            android:cacheColorHint="@android:color/transparent"
-            android:divider="@drawable/dash_divider"
-            android:listSelector="@android:color/transparent"
-            android:fastScrollEnabled="true"
-            android:layerType="software"/>
+        android:id="@+id/post_list"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@drawable/dash_divider"
+        android:fastScrollEnabled="true"
+        android:layerType="software"
+        android:listSelector="@android:color/transparent" />
 
-    <LinearLayout android:layout_width="fill_parent" android:orientation="horizontal"
-                  android:padding="5dp"
-                  android:background="#55CCCC99"
-                  android:layout_height="wrap_content">
-        <EditText android:layout_width="0dp" android:layout_weight="1"
-                  android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#55CCCC99"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <EditText
+            android:id="@+id/input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button android:layout_marginLeft="5dp"
+            android:id="@+id/send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/send"/>
     </LinearLayout>
+
 </LinearLayout>

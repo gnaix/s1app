@@ -6,7 +6,9 @@
     android:gravity="center"
     android:padding="32.0dip" >
 
-    <ProgressBar
+    <ImageView
+        android:id="@+id/loadingIv"
+        android:background="@drawable/loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:indeterminate="true" />

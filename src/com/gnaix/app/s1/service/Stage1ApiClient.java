@@ -10,7 +10,6 @@ import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
-import java.net.SocketTimeoutException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,8 +17,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import android.content.res.Resources;
-import com.gnaix.app.s1.R;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
@@ -32,9 +29,7 @@ import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
@@ -44,6 +39,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -52,10 +48,8 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.gnaix.app.s1.Constants;
+import com.gnaix.app.s1.R;
 import com.gnaix.app.s1.bean.ForumTopicBean;
-import com.gnaix.app.s1.bean.HotTopicBean;
-import com.gnaix.app.s1.bean.Post;
-import com.gnaix.app.s1.bean.Topic;
 import com.gnaix.app.s1.bean.TopicPostBean;
 import com.gnaix.common.ui.AutoDismissFragmentDialog;
 import com.gnaix.common.ui.AutoDismissFragmentDialog.AutoDismissListener;
@@ -80,7 +74,9 @@ public class Stage1ApiClient {
     public static final int API_REQUEST_TOPIC_POST_LIST = 3;
 
     public static final int API_REQUEST_LOGIN = 4;
-
+    
+    public static final int API_REQUEST_TOPIC_COMMENT = 5;
+    
     private final AtomicInteger mCount = new AtomicInteger(1);
     private AndroidHttpClient mHttpClient;
 
@@ -108,6 +104,14 @@ public class Stage1ApiClient {
         Bundle params = generateBundle(API_REQUEST_LOGIN);
         params.putString("username", username);
         params.putString("password", password);
+        return request(callback, params);
+    }
+    
+    public int comment(ClientCallback callback, String content, int tid,String formhash) {
+        Bundle params = generateBundle(API_REQUEST_TOPIC_COMMENT);
+        params.putString("content", content);
+        params.putString("formhash", formhash);
+        params.putInt("tid", tid);
         return request(callback, params);
     }
 
@@ -198,7 +202,7 @@ public class Stage1ApiClient {
             mDelay = milliseconds;
         }
 
-        private ArrayList<Topic> getForumTopic(int fid, int page) throws Exception {
+        private ForumTopicBean getForumTopicImpl(int fid, int page) throws Exception {
             Gson gson = new Gson();
             HttpPost request = new HttpPost(Constants.SERVER_BASE + Constants.URI_TOPIC_LIST);
             List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -217,7 +221,7 @@ public class Stage1ApiClient {
                             .getEntity()));
                     ForumTopicBean bean = gson.fromJson(new InputStreamReader(in),
                             ForumTopicBean.class);
-                    return bean.Variables.forum_threadlist;
+                    return bean;
                 }
             } finally {
                 if (in != null) {
@@ -226,8 +230,39 @@ public class Stage1ApiClient {
             }
             return null;
         }
+        
+        private boolean commentImpl(String message, int tid,String formhash) throws Exception {
+            HttpPost request = new HttpPost(Constants.SERVER_BASE + Constants.URI_COMMENT);
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("formhash", formhash));
+            params.add(new BasicNameValuePair("message", message));
+            params.add(new BasicNameValuePair("tid", String.valueOf(tid)));
+            InputStream in = null;
+            try {
+                request.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
+                AndroidHttpClient.modifyRequestToAcceptGzipResponse(request);
+                HttpResponse response = mHttpClient.execute(request, mHttpContext);
+                if (response != null && response.getStatusLine() != null
+                        && response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+                    in = new BufferedInputStream(AndroidHttpClient.getUngzippedContent(response
+                            .getEntity()));
+                    String content = convertStreamToString(in);
+                    Log.d(Constants.TAG, content);
+                    return content.contains("post_reply_succeed");
+                }
+            } finally {
+                if (in != null) {
+                    try {
+                        in.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            return false;
+        }
 
-        private boolean login(String username, String password) throws Exception {
+        private boolean loginImpl(String username, String password) throws Exception {
             HttpPost request = new HttpPost(Constants.SERVER_BASE + Constants.URI_LOGIN);
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("fastloginfield", "username"));
@@ -273,7 +308,7 @@ public class Stage1ApiClient {
          * @return post列表
          * @throws IOException
          */
-        private ArrayList<Post> getTopicPost(int tid, int page) throws Exception {
+        private TopicPostBean getTopicPostImpl(int tid, int page) throws Exception {
             Gson gson = new Gson();
             HttpPost request = new HttpPost(Constants.SERVER_BASE + Constants.URI_POST_LIST);
             List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -292,7 +327,7 @@ public class Stage1ApiClient {
                             .getEntity()));
                     TopicPostBean bean = gson.fromJson(new InputStreamReader(in),
                             TopicPostBean.class);
-                    return bean.Variables.postlist;
+                    return bean;
                 }
             } finally {
                 if (in != null) {
@@ -302,7 +337,7 @@ public class Stage1ApiClient {
             return null;
         }
 
-        private ArrayList<Topic> getHotTopic(int page) throws Exception {
+        private ForumTopicBean getHotTopicImpl(int page) throws Exception {
             Gson gson = new Gson();
             HttpGet request = new HttpGet(Constants.SERVER_BASE + Constants.URI_HOT_TOPIC_LIST+"&page="+page);
             InputStream in = null;
@@ -314,9 +349,10 @@ public class Stage1ApiClient {
 
                     in = new BufferedInputStream(AndroidHttpClient.getUngzippedContent(response
                             .getEntity()));
-                    HotTopicBean bean = gson
-                            .fromJson(new InputStreamReader(in), HotTopicBean.class);
-                    return bean.Variables.data;
+                    ForumTopicBean bean = gson
+                            .fromJson(new InputStreamReader(in), ForumTopicBean.class);
+                    bean.Variables.forum_threadlist = bean.Variables.data;
+                    return bean;
                 }
             } finally {
                 if (in != null) {
@@ -347,7 +383,7 @@ public class Stage1ApiClient {
                 try {
                     int fid = mParams.getInt("fid");
                     int page = mParams.getInt("page");
-                    fillSuccessResult(apiCode, getForumTopic(fid, page), result);
+                    fillSuccessResult(apiCode, getForumTopicImpl(fid, page), result);
                 }catch (Exception e) {
                     e.printStackTrace();
                     fillFailedResult(apiCode, mResource.getString(R.string.msg_failed), SC_QEQUEST_FAIL, result);
@@ -356,17 +392,28 @@ public class Stage1ApiClient {
             case API_REQUEST_HOT_TOPIC_LIST:
                 try {
                     int page = mParams.getInt("page");
-                    fillSuccessResult(apiCode, getHotTopic(page), result);
+                    fillSuccessResult(apiCode, getHotTopicImpl(page), result);
                 }catch (Exception e) {
                     e.printStackTrace();
                     fillFailedResult(apiCode, mResource.getString(R.string.msg_failed), SC_QEQUEST_FAIL, result);
                 }
                 break;
+            case API_REQUEST_TOPIC_COMMENT:
+                try {
+                    int tid = mParams.getInt("tid");
+                    String message = mParams.getString("content");
+                    String formhash = mParams.getString("formhash");
+                    fillSuccessResult(apiCode, commentImpl(message, tid, formhash), result);
+                }catch (Exception e) {
+                    e.printStackTrace();
+                    fillFailedResult(apiCode, mResource.getString(R.string.msg_failed), SC_QEQUEST_FAIL, result);
+                }
+                break;                
             case API_REQUEST_TOPIC_POST_LIST:
                 try {
                     int tid = mParams.getInt("tid");
                     int page = mParams.getInt("page");
-                    fillSuccessResult(apiCode, getTopicPost(tid, page), result);
+                    fillSuccessResult(apiCode, getTopicPostImpl(tid, page), result);
                 }catch (Exception e) {
                     e.printStackTrace();
                     fillFailedResult(apiCode, mResource.getString(R.string.msg_failed), SC_QEQUEST_FAIL, result);
@@ -376,7 +423,7 @@ public class Stage1ApiClient {
                 try {
                     String username = mParams.getString("username");
                     String password = mParams.getString("password");
-                    fillSuccessResult(apiCode, login(username, password), result);
+                    fillSuccessResult(apiCode, loginImpl(username, password), result);
                 } catch (Exception e) {
                     e.printStackTrace();
                     fillFailedResult(apiCode, mResource.getString(R.string.msg_failed), SC_QEQUEST_FAIL, result);

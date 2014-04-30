@@ -55,10 +55,12 @@ public class MainActivity extends BaseActivity implements OnForumSelectedListene
         mForumListFragment.setOnForumSelectedListener(this);
 
         mForumTopicListFragment = new ForumTopicListFragment();
+        mForumTopicListFragment.setRefreshRequired(true);
+        mForumTopicListFragment.setArgument("PAGE", 1);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.content_frame, mForumTopicListFragment);
         transaction.replace(R.id.left_drawer, mForumListFragment);
+        transaction.replace(R.id.content_frame, mForumTopicListFragment);
         transaction.commit();
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -150,7 +152,7 @@ public class MainActivity extends BaseActivity implements OnForumSelectedListene
         mForumTopicListFragment.setArgument("FORUM", forum);
         mForumTopicListFragment.setArgument("PAGE", 1);
         mForumTopicListFragment.setRefreshRequired(true);
-        if(mNavigationManager.getActivePageType() != NavigationManager.PAGE_FROUM_TOPIC){
+        if(!mForumTopicListFragment.isAdded()){
             mNavigationManager.showPage(NavigationManager.PAGE_FROUM_TOPIC, mForumTopicListFragment);
         }
         mForumTopicListFragment.refresh();

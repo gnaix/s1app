@@ -10,12 +10,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.gnaix.app.s1.Constants;
 import com.gnaix.app.s1.R;
 import com.gnaix.app.s1.bean.Forum;
+import com.gnaix.app.s1.bean.ForumTopicBean;
 import com.gnaix.app.s1.bean.Topic;
 import com.gnaix.app.s1.nav.NavigationManager;
 import com.gnaix.app.s1.service.Stage1ApiClient;
@@ -33,6 +33,7 @@ public class ForumTopicListFragment extends PageFragment implements OnItemClickL
     private int taskIDLoadMore;
     private ArrayList<Topic> mTopicList;
     private LoginFragment mLoginFragment;
+    private String formhash;
 
 
     @Override
@@ -74,7 +75,8 @@ public class ForumTopicListFragment extends PageFragment implements OnItemClickL
         hideLoadingIndicator();
         if(result.statueCode == Stage1ApiClient.SC_QEQUEST_SUCCESS) {
             if(result.apiCode == Stage1ApiClient.API_REQUEST_FORUM_TOPIC_LIST || result.apiCode == Stage1ApiClient.API_REQUEST_HOT_TOPIC_LIST) {
-                ArrayList<Topic> list = (ArrayList<Topic>) result.mData;
+                ForumTopicBean forumTopicBean = (ForumTopicBean) result.mData;
+                formhash = forumTopicBean.Variables.formhash;
                 if (result.messageID == taskIDRefresh) {
                     mTopicList.clear();
                     mListView.completeRefresh();
@@ -82,7 +84,7 @@ public class ForumTopicListFragment extends PageFragment implements OnItemClickL
                     currentPage++;
                     mListView.completeLoadMore();
                 }
-                mTopicList.addAll(list);
+                mTopicList.addAll(forumTopicBean.Variables.forum_threadlist);
                 if (mTopicList.size() > 0) {
                     setRefreshRequired(false);
                 }
@@ -114,6 +116,7 @@ public class ForumTopicListFragment extends PageFragment implements OnItemClickL
         mTopicListAdapter = new TopicListAdapter(getActivity());
         mTopicListAdapter.setTopicList(mTopicList);
         mListView = (PullRefreshListView) findViewById(R.id.topic_list);
+        mListView.setFooterLayout(R.layout.pull_refresh_listview_footer);
         mListView.setOnPullListener(this);
         mListView.setAdapter(mTopicListAdapter);
         mListView.setOnItemClickListener(this);
@@ -158,9 +161,9 @@ public class ForumTopicListFragment extends PageFragment implements OnItemClickL
         showLoadingIndicator();
         Forum forum = getArguments().getParcelable("FORUM");
         if (forum == null || Constants.ID_HOT_TOPIC_FROUM == forum.getFid()) {
-            taskIDRefresh = mPageFragmentHost.getS1Api().getHotTopic(this,currentPage=0);
+            taskIDRefresh = mPageFragmentHost.getS1Api().getHotTopic(this,currentPage=1);
         } else {
-            taskIDRefresh = mPageFragmentHost.getS1Api().getForumTopic(this,forum.getFid(), currentPage=0);
+            taskIDRefresh = mPageFragmentHost.getS1Api().getForumTopic(this,forum.getFid(), currentPage=1);
         }
     }
 

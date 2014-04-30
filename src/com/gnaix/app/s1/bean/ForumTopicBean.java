@@ -7,6 +7,11 @@ public class ForumTopicBean implements Serializable{
     public Variable Variables;
 
     public class Variable{
+        public String formhash;
+        public String auth;
+        public String saltkey;
+        public String cookiepre;
         public ArrayList<Topic> forum_threadlist;
+        public ArrayList<Topic> data;
     }
 }

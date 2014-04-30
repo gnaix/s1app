@@ -4,16 +4,17 @@ import java.io.Serializable;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gnaix.app.s1.Constants;
@@ -29,6 +30,7 @@ public abstract class PageFragment extends Fragment {
     protected boolean mSaveInstanceStateCalled;
     protected PageFragmentHost mPageFragmentHost;
     protected View mloadingIndicator, mErrorIndicator;
+    private AnimationDrawable loadingDrawable;
     protected TextView mErrorMsgTv;
     protected Button mRetryButton;
 
@@ -104,6 +106,7 @@ public abstract class PageFragment extends Fragment {
         View contentView = inflater.inflate(R.layout.fragment_host, container, false);
         mloadingIndicator = contentView.findViewById(R.id.loading_indicator);
         mloadingIndicator.setVisibility(View.GONE);
+        loadingDrawable = (AnimationDrawable) mloadingIndicator.findViewById(R.id.loadingIv).getBackground();
         mErrorIndicator = contentView.findViewById(R.id.page_error_indicator);
         mErrorIndicator.setVisibility(View.GONE);
         mErrorMsgTv = (TextView) mErrorIndicator.findViewById(R.id.error_msg);
@@ -125,6 +128,7 @@ public abstract class PageFragment extends Fragment {
 
     public void showLoadingIndicator() {
         mloadingIndicator.setVisibility(View.VISIBLE);
+        loadingDrawable.start();
         mErrorIndicator.setVisibility(View.GONE);
     }
 
@@ -134,6 +138,7 @@ public abstract class PageFragment extends Fragment {
 
     public void showErrorIndicator(String errorMsg) {
         mloadingIndicator.setVisibility(View.GONE);
+        loadingDrawable.stop();
         mErrorIndicator.setVisibility(View.VISIBLE);
         mErrorMsgTv.setText(errorMsg);
         mRetryButton.setOnClickListener(new OnClickListener() {
@@ -148,10 +153,12 @@ public abstract class PageFragment extends Fragment {
     public void hideErrorIndicator() {
         mErrorIndicator.setVisibility(View.GONE);
         mloadingIndicator.setVisibility(View.GONE);
+        loadingDrawable.stop();
     }
 
     public void hideLoadingIndicator() {
         mloadingIndicator.setVisibility(View.GONE);
+        loadingDrawable.stop();
         mErrorIndicator.setVisibility(View.GONE);
     }
 

@@ -1,33 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	android:layout_width="match_parent" android:layout_height="match_parent"
-	android:orientation="vertical" android:padding="15dp">
-	<TextView android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:text="@string/user_name"
-		android:textColor="@color/text_blue" android:textSize="17sp" />
-	<EditText android:id="@id/user_name" android:inputType="text"
-		android:imeOptions="actionNext" android:layout_width="match_parent"
-		android:textColor="@color/text_blue"
-		android:layout_height="wrap_content" android:layout_marginTop="5dip">
-		<requestFocus />
-	</EditText>
-	<TextView android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:layout_marginTop="5dip"
-		android:text="@string/password" android:textColor="@color/text_blue"
-		android:textSize="17sp" />
-	<EditText android:id="@id/password" android:imeOptions="actionNone"
-		android:layout_width="match_parent" android:layout_height="wrap_content"
-		android:textColor="@color/text_blue"
-		android:layout_marginTop="5dip" android:inputType="textPassword" />
-	<CheckBox android:id="@+id/rember_account" android:checked="true"
-		android:layout_width="wrap_content" android:layout_height="wrap_content"
-		android:layout_marginTop="5dip" android:text="@string/remember_account"
-		android:textColor="@color/text_blue" android:textSize="15sp">
-	</CheckBox>
-	<Button android:id="@+id/login_button" android:layout_width="match_parent"
-		android:layout_height="wrap_content" android:layout_marginTop="30dip"
-		android:background="@drawable/button_stage1" android:gravity="center"
-		android:text="@string/login" android:textSize="20sp"
-		android:textColor="@color/text_blue" />
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="15dp" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/user_name"
+        android:textColor="@color/text_blue"
+        android:textSize="17sp" />
+
+    <EditText
+        android:id="@id/user_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dip"
+        android:imeOptions="actionNext"
+        android:inputType="text"
+        android:textColor="@color/text_blue" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dip"
+        android:text="@string/password"
+        android:textColor="@color/text_blue"
+        android:textSize="17sp" />
+
+    <EditText
+        android:id="@id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dip"
+        android:imeOptions="actionNone"
+        android:inputType="textPassword"
+        android:textColor="@color/text_blue" />
+
+    <CheckBox
+        android:id="@+id/rember_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dip"
+        android:checked="true"
+        android:text="@string/remember_account"
+        android:textColor="@color/text_blue"
+        android:textSize="15sp" >
+    </CheckBox>
+
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dip"
+        android:gravity="center"
+        android:text="@string/login"
+        android:textSize="20sp" />
+
 </LinearLayout>

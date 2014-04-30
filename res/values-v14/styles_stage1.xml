@@ -26,6 +26,7 @@
 		<item name="android:editTextBackground">@drawable/stage1theme_edit_text_holo_light</item>
 		<item name="android:listChoiceIndicatorMultiple">@drawable/stage1theme_btn_check_holo_light</item>
 		<item name="android:listChoiceIndicatorSingle">@drawable/stage1theme_btn_radio_holo_light</item>
+		<item name="android:buttonStyle">@style/Button.Stage1</item>
 	</style>
 
 	<style name="ActionBar.Solid.Stage1" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">

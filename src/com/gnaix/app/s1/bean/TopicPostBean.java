@@ -7,6 +7,10 @@ public class TopicPostBean implements Serializable{
     public Variable Variables;
 
     public class Variable{
+        public String formhash;
+        public String auth;
+        public String saltkey;
+        public String cookiepre;
         public ArrayList<Post> postlist;
     }
 }
